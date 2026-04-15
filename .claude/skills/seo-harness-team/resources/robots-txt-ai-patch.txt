@@ -1,0 +1,39 @@
+# ============================================
+# AI Crawler Access Configuration
+# Add these rules to your existing robots.txt
+# ============================================
+
+# OpenAI GPT Search Crawler
+User-agent: GPTBot
+Allow: /
+
+# Anthropic Claude Crawler
+User-agent: ClaudeBot
+Allow: /
+
+# Perplexity AI Crawler
+User-agent: PerplexityBot
+Allow: /
+
+# Google AI (Gemini training data)
+User-agent: Google-Extended
+Allow: /
+
+# ============================================
+# Restricted Areas (apply to all crawlers)
+# Adjust paths to match your site structure
+# ============================================
+# User-agent: *
+# Disallow: /admin/
+# Disallow: /checkout/
+# Disallow: /cart/
+# Disallow: /account/
+# Disallow: /api/
+# Disallow: /tmp/
+# Disallow: /*.json$
+# Disallow: /internal/
+
+# ============================================
+# Sitemap Reference
+# ============================================
+# Sitemap: https://yourdomain.com/sitemap.xml

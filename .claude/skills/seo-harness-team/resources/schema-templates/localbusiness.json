@@ -1,0 +1,37 @@
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "[BUSINESS_NAME]",
+  "url": "[SITE_URL]",
+  "image": "[IMAGE_URL]",
+  "description": "[BUSINESS_DESCRIPTION]",
+  "telephone": "[PHONE]",
+  "email": "[EMAIL]",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "[STREET]",
+    "addressLocality": "[CITY]",
+    "addressRegion": "[STATE/PROVINCE]",
+    "postalCode": "[ZIP]",
+    "addressCountry": "[COUNTRY_CODE]"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "[LAT]",
+    "longitude": "[LNG]"
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "opens": "09:00",
+      "closes": "18:00"
+    }
+  ],
+  "priceRange": "[PRICE_RANGE]",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "[RATING]",
+    "reviewCount": "[COUNT]"
+  }
+}
