@@ -1,45 +1,38 @@
-# korvia-seo-skill
+# korvia-seo-skill v2
 
-SEO Harness Team — Claude Code Skill for comprehensive SEO/SEM/GEO optimization.
+SEO Harness Team — Claude Code Skill for comprehensive SEO/SEM/GEO/CWV optimization.
+
+**Proven on production**: www.korvia.com saw 21+ commits across 2 days deliver Lighthouse SEO 92→100, CLS desktop 0.89→≤0.1, BP 54→77 on homepage, image payload -185 KB, all with zero blockers across 5 consecutive 3-layer agent pipeline rounds.
 
 ## Overview
 
-A 6-agent SEO expert team that takes a URL and automatically runs:
-- Business analysis and audience profiling
-- Keyword research and competitor gap analysis
-- Google Ads campaign blueprint design
-- E-E-A-T optimized content rewriting
-- Technical SEO audit (meta tags, Schema, Core Web Vitals)
-- Generative Engine Optimization (AI search citation)
-- 24-item quality gate with AI penalty avoidance
+A 6-agent SEO expert team + proven orchestration patterns for large-scale site-wide sweeps.
 
-## Architecture
+### Agents
+- **Intake/Orchestrator** — URL analysis and task delegation
+- **Researcher** — Keyword, competitor, SERP analysis
+- **SEM Strategist** — Google Ads blueprint, Smart Bidding
+- **Content Writer** — E-E-A-T optimized page rewriting
+- **Technical SEO** — Meta, Schema, CWV, robots, llms.txt
+- **GEO Optimizer** — ChatGPT/Perplexity/Gemini citation
+- **Quality Harness** — 24-item AI penalty avoidance gate
 
-```
-[URL Input]
-    |
-    v
-INTAKE AGENT (Orchestrator)
-    |
-    +-- RESEARCHER AGENT        /keyword-research, /competitor-analysis
-    +-- SEM STRATEGIST AGENT    /sem-strategy
-    +-- CONTENT WRITER AGENT    /write-page
-    +-- TECHNICAL SEO AGENT     /seo-audit, /meta-optimize, /schema-generate
-    +-- GEO OPTIMIZER AGENT     /geo-optimize
-    +-- QUALITY HARNESS AGENT   /harness-check (24-item gate)
-```
+### Orchestration patterns (v2 addition)
+- **3-layer agent pipeline** — Worker parallel → Audit independent → Human final
+- **Batch splitting** — 40+ file sweeps via 5-7 file-disjoint parallel batches
+- **Manager agent** — Per-page checklist audit producing ready-to-dispatch prompts
 
 ## Quick Start
 
 ```bash
-# Clone the skill repo
+# Clone
 git clone https://github.com/henryeoh/korvia-seo-skill.git
 
-# Copy skill files to your project's .claude directory
+# Install to your project
 cp -r korvia-seo-skill/.claude/skills/seo-harness-team /path/to/project/.claude/skills/
 cp -r korvia-seo-skill/.claude/agents /path/to/project/.claude/
 
-# In Claude Code, run:
+# In Claude Code:
 # /full-audit https://your-website.com
 ```
 
@@ -60,6 +53,61 @@ cp -r korvia-seo-skill/.claude/agents /path/to/project/.claude/
 | `/robots-update <URL>` | Technical SEO | AI crawler config |
 | `/harness-check` | Quality Harness | 24-item quality gate |
 
+## Documentation (NEW in v2)
+
+### 📘 `docs/WEB_PLAYBOOK.md`
+Full 16-category SEO + Performance + a11y playbook distilled from 21+ production commits. Every category has concrete code patterns, gotchas discovered, and verification steps. Covers:
+- robots/sitemap/llms.txt (incl. env `.trim()` bug)
+- Schema.org entity graph (Organization + WebSite + Service + FAQPage + HowTo + Event + CollectionPage)
+- CLS root causes (7 patterns)
+- Hydration #418 (safety nets)
+- Perf (GTM lazyOnload, browserslist modern, optimizeCss, unoptimized)
+- Security headers (HSTS/COOP/CORP/CSP Report-Only)
+- CrUX vs Lighthouse interpretation
+- Next.js gotchas (styled-jsx client-only, Tailwind v4)
+
+### 📋 `docs/NEW_PAGE_CHECKLIST.md`
+17-point checklist for every new Next.js page. Use as a pre-commit gate. Split into:
+- A. Metadata (6 items)
+- B. Schema.org JSON-LD (3 items)
+- C. Images (4 items)
+- D. CLS defense (3 items)
+- E. Accessibility (1 item)
+- Plus: page type-specific additional checks + validation commands
+
+### 🎯 `docs/CLS_SEVEN_SOURCES.md`
+7 most common CLS causes in Next.js + Tailwind v4:
+1. Swiper pre-hydration stack (biggest — can cause CLS 0.85 alone)
+2. Raw `<img>` without width/height
+3. Intl API locale mismatch
+4. Animated counter width growth
+5. Animations using layout properties
+6. Font swap without adjustFontFallback
+7. Async client component materialization
+
+### 🖼️ `docs/NEXT_IMAGE_SWIPER.md`
+Swiper + next/image pattern: `<Image fill>` has quirks, but `<Image width={N} height={M}>` works fine. 250×250 avatars → 36×36 display = raw `<img>` wastes ~12KB/avatar. Migration to next/image saves ~70KB/page.
+
+### 📊 `docs/CRUX_LIGHTHOUSE_INTERPRETATION.md`
+When to trust which metric:
+- CrUX (real users, 28-day rolling) — source of truth for SEO ranking but lag-heavy
+- Lighthouse synthetic — immediate reflection, use for iterative fixing
+- DevTools Performance — root-cause debugging
+- Common confusion: "CrUX still bad after I fixed it" = 4-week propagation
+
+### 🛡️ `docs/CSP_ALLOWLIST.md`
+CSP writing without breaking 3rd parties:
+- Microsoft Clarity: `scripts.clarity.ms` + `c.clarity.ms` + `y.clarity.ms` (wildcard `*.clarity.ms`)
+- Google Ads: `googleadservices.com` + `googleads.g.doubleclick.net` + `google.com/ccm` + `td.doubleclick.net`
+- Start Report-Only → 1-2 weeks monitoring → enforcing
+
+### 🔄 `docs/3LAYER_AGENT_PIPELINE.md`
+Proven orchestration for 10+ file bulk operations:
+```
+[Manager discovers] → [Workers parallel batches] → [Independent audit] → [Human final commit]
+```
+5 consecutive rounds on production delivered zero blockers, 100+ files modified.
+
 ## Key Features
 
 ### 2026 SEO Standards
@@ -70,7 +118,7 @@ cp -r korvia-seo-skill/.claude/agents /path/to/project/.claude/
 ### GEO (Generative Engine Optimization)
 - ChatGPT, Perplexity, Gemini, Claude citation optimization
 - llms.txt file generation for AI crawler discovery
-- robots.txt AI crawler configuration
+- robots.txt AI crawler configuration (11 bots allowlisted, Bytespider blocked)
 - Quick Answer Blocks for AI Overview targeting
 
 ### AI Penalty Avoidance
@@ -85,13 +133,25 @@ cp -r korvia-seo-skill/.claude/agents /path/to/project/.claude/
 - Phased bidding roadmap
 - Negative keyword management
 
+### CLS + Performance (v2 addition)
+- 7-pattern CLS detector with fix code
+- Swiper + next/image correct pattern
+- GTM lazyOnload migration from @next/third-parties
+- Cloudflare R2 Cache Rule (Edge + Browser TTL override)
+- Image delivery optimization (remove `unoptimized` on CDN)
+
+### Security (v2 addition)
+- HSTS + COOP + CORP headers
+- CSP Report-Only → enforcing migration path
+- 3rd-party allowlist patterns (Clarity/GA/Bing UET/Ads)
+
 ## File Structure
 
 ```
 .claude/
   skills/
     seo-harness-team/
-      SKILL.md                  <- Main skill file
+      SKILL.md
       resources/
         quality-gate-checklist.md
         llms-txt-template.md
@@ -108,12 +168,33 @@ cp -r korvia-seo-skill/.claude/agents /path/to/project/.claude/
     technical-seo.md
     geo-optimizer.md
     quality-harness.md
+docs/                            # NEW in v2
+  WEB_PLAYBOOK.md                # 16 categories
+  NEW_PAGE_CHECKLIST.md          # 17-point checklist
+  CLS_SEVEN_SOURCES.md           # CLS detection + fixes
+  NEXT_IMAGE_SWIPER.md           # Swiper pattern
+  CRUX_LIGHTHOUSE_INTERPRETATION.md  # Metric decoding
+  CSP_ALLOWLIST.md               # 3rd-party fan-out
+  3LAYER_AGENT_PIPELINE.md       # Bulk orchestration
 ```
+
+## Changelog
+
+### v2 (2026-04-18)
+Production-proven additions from www.korvia.com 2-day sweep (21+ commits):
+- Added 7 practical docs distilled from real debugging sessions
+- Documented 6 specific gotchas that only surface in production (env trim, Swiper styled-jsx SSR, CF Cache Browser TTL override, CLS 0.89 culprit)
+- Orchestration: 3-layer pipeline pattern formalized
+- Playbook: 16 categories replacing earlier 3-agent scope
+- Metrics interpretation: CrUX vs Lighthouse clear separation
+
+### v1 (2026-04-15)
+Initial 6-agent SEO team with 24-item quality gate.
 
 ## Requirements
 
 - Claude Code >= 1.0
-- Tools: WebFetch, WebSearch, Bash (optional)
+- Tools: WebFetch, WebSearch, Bash, Edit, Write, Read, Glob, Grep
 
 ## License
 
