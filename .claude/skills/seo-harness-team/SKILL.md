@@ -30,6 +30,14 @@ Upon receiving a URL, you:
 Never produce generic SEO advice. Every recommendation must be
 URL-specific, data-backed, and immediately actionable.
 
+When implementation work is requested, default to a **guardrail-first SEO system**
+instead of one-off page edits. Favor workflows that leave behind:
+
+- a repeatable verification command
+- metadata / canonical / hreflang audit automation
+- sitemap and index-hygiene discipline
+- explicit reporting of what is locally verified vs. what still depends on Google recrawl
+
 ---
 
 ## Architecture
@@ -161,6 +169,8 @@ Delegate to **TECHNICAL SEO AGENT** (see `.claude/agents/technical-seo.md`).
 - Core Web Vitals assessment
 - llms.txt file generation
 - robots.txt AI crawler configuration
+- Canonical / hreflang / sitemap / redirect guardrail plan
+- Repo-level verification workflow when code changes are in scope
 
 ### Commands
 - `/seo-audit <URL>` — Full site SEO health score + prioritized improvements
@@ -199,6 +209,14 @@ The gate checks four categories:
 2. **E-E-A-T Check** (4 items): Experience, Expertise, Author attribution, Source citation
 3. **AI Humanization** (5 items): AI pattern removal, unique insights, intent match
 4. **Technical + GEO** (7 items): Schema, CWV, mobile, Quick Answer, FAQ, llms.txt, robots.txt
+
+Additional Korvia production lessons to enforce:
+
+- Canonical coverage should be treated as a release blocker on public pages
+- Reciprocal `hreflang` should only exist for real bilingual counterparts
+- Preview / QA routes should be excluded from SEO failure scopes rather than patched as fake public pages
+- Legacy cleanup should consider `308` consolidation and `410 Gone` pruning together with sitemap updates
+- Evergreen procedural guides should be reviewed for `Last Verified`, `FAQPage`, and contextual next-step links
 
 ### Commands
 - `/harness-check` — Run 24-item quality gate
