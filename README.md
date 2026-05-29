@@ -55,6 +55,9 @@ cp -r korvia-seo-skill/.claude/agents /path/to/project/.claude/
 
 ## Documentation (NEW in v2)
 
+### 🤖 `docs/AEO_GEO_PLAYBOOK_2026.md`
+AI 검색 시대 상위 전략 레퍼런스 (2026-05-29 lock-in). SEO/AEO/GEO 3-레이어 정의, Princeton 정량 근거(+41% 인용문/+30% 통계/+30% 출처), 플랫폼별 인용 성향(ChatGPT Wikipedia 48% / Perplexity Reddit 47% / 중복 11%), schema+llms.txt 토대, 측정 툴링, 한국/네이버 맥락, KORVIA 적용 3-Phase 플랜. 운영 체크리스트는 `geo-optimizer.md` 참조.
+
 ### 📘 `docs/WEB_PLAYBOOK.md`
 Full 16-category SEO + Performance + a11y playbook distilled from 21+ production commits. Every category has concrete code patterns, gotchas discovered, and verification steps. Covers:
 - robots/sitemap/llms.txt (incl. env `.trim()` bug)
