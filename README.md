@@ -56,7 +56,7 @@ cp -r korvia-seo-skill/.claude/agents /path/to/project/.claude/
 ## Documentation (NEW in v2)
 
 ### 🤖 `docs/AEO_GEO_PLAYBOOK_2026.md`  · ⚠ LEGACY
-AI 검색 시대 상위 전략 레퍼런스 (2026-05-29 lock-in). SEO/AEO/GEO 3-레이어 정의, Princeton 정량 근거(+41% 인용문/+30% 통계/+30% 출처), 플랫폼별 인용 성향(ChatGPT Wikipedia 48% / Perplexity Reddit 47% / 중복 11%), schema+llms.txt 토대, 측정 툴링, 한국/네이버 맥락, KORVIA 적용 3-Phase 플랜. 운영 체크리스트는 `geo-optimizer.md` 참조.
+AI 검색 시대 상위 전략 레퍼런스 (2026-05-29 lock-in). SEO/AEO/GEO 3-레이어 정의, Princeton 정량 근거(구체 %는 **SUPERSEDED — 인용 금지**, 방향만: 인용문·통계·출처=상위 레버, SSOT=`GEO_AEO §B/§Δ`), 플랫폼별 인용 성향(수치=3자 측정·방향성만), schema 토대(llms.txt=저ROI 강등), 측정 툴링, 한국/네이버 맥락, KORVIA 적용 3-Phase 플랜. 운영 체크리스트는 `geo-optimizer.md` 참조.
 > ⚠ **SUPERSEDED (부분) — KEEP for 전략 why**: 정량 수치·llms.txt·스키마 생사는 폐지/정정됨 → SSOT는 `GEO_AEO_AI_ENGINES_2026 §B/§Δ` · `SCHEMA_JSONLD_CATALOG` · `ROBOTS_SITEMAP_RSS_TEMPLATES §A`.
 
 ### 📘 `docs/WEB_PLAYBOOK.md`  · ⚠ LEGACY

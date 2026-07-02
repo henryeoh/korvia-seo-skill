@@ -216,7 +216,7 @@ The gate checks four categories:
 
 ### Commands
 - `/gate <file|url>` — Quality Harness가 `docs/GATE_CARD.md`의 `[AUTO]`를 실행하고 `[JUDGE]`는 slop-judge에 위임 → **P0/P1/P2 fix-list** 반환. 수정은 별도 writer 패스(author 레인 분리, author ≠ judge). *(카드 부재 시 `docs/CONTENT_AUTORULES.md` 폴백 — 위 캐비앗 참조.)*
-- `/multi-engine-submit <url>` — 발행 후 제출 런북: **IndexNow 핑 → GSC URL 검사(색인요청) → Naver 웹페이지 수집요청 → Daum `webmaster.daum.net` 수집요청**. 상세=`docs/MULTI_ENGINE_MASTER_2026.md` §5(§2.1 체크리스트).
+- `/multi-engine-submit <url>` — 발행 후 제출 **런북(반자동 — 완전 자동 CLI 아님)**: ① **IndexNow 핑=스크립트 실행 가능**(각 사이트 레포 `npm run indexnow:ping <url>` — Bing·Naver 등 참여 엔진 커버) ② **GSC URL 검사·Naver 수집요청·Daum `webmaster.daum.net` 수집요청=콘솔 수동**(로그인 필요 — 에이전트는 사람 단계로 안내만, 자동화 금지). 상세=`docs/MULTI_ENGINE_MASTER_2026.md` §5(§2.1 체크리스트).
 - `/harness-check` — (레거시) 24항목 게이트 — `GATE_CARD [AUTO]`로 대체됨.
 - `/full-audit <URL>` — Execute ALL phases sequentially (complete report)
 

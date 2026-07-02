@@ -618,7 +618,7 @@ curl -sL https://<site>/<page> | grep -oE '<link rel="canonical"[^>]*>|"@type"[[
 - **JSON-LD `inLanguage`**로 각 언어판 언어 표시(`"ko"` / `"en"`). 각 언어판은 **자기 언어판을 canonical**로, hreflang로 서로 연결(상세: [`NEW_PAGE_CHECKLIST.md`](./NEW_PAGE_CHECKLIST.md) §A-6, [`WEB_PLAYBOOK.md`](./WEB_PLAYBOOK.md) §12.3). hreflang 코드: 언어=ISO 639-1 소문자(`ko`,`en`), 지역=ISO 3166-1 Alpha-2 대문자(**영국=`GB`**, UK 아님). 상호·자기참조·절대 URL·`x-default` 필수.
 - **⚠ Naver는 hreflang 미준수** → 한국어 자산은 위젯·메뉴·푸터·이미지 텍스트까지 전부 한국어. JSON-LD의 Naver 리치 효과는 **미문서화(UNVERIFIABLE)** → Naver 노출은 OG + C-Rank/D.I.A+/스마트블록/AI 브리핑로 별도 확보.
 - **`og:image` 값은 5MB 이하 · 1200×630**, `og:url` = canonical, 다국어는 `og:locale`(`ko_KR`/`en_US`) + `og:locale:alternate`. OG는 카카오톡/네이버 공유 미리보기도 커버 → 국내·글로벌 SNS 동시 대응.
-- **YMYL(Korvia 비자/취업, Kimchi 통신/금융)**: 스키마만으로 신뢰가 서지 않는다. **Person(author) 자격 + Article `dateModified` + 본문 1차 출처(법령·공식기관)**를 함께 표면화해야 E-E-A-T(특히 Trust)가 랭킹·AI 인용 게이트를 통과. 부정확·과장은 하드페일 → 발행 전 [`slop-judge`](../../.claude/skills/) 스킬로 YMYL 하드페일 0 확인.
+- **YMYL(Korvia 비자/취업, Kimchi 통신/금융)**: 스키마만으로 신뢰가 서지 않는다. **Person(author) 자격 + Article `dateModified` + 본문 1차 출처(법령·공식기관)**를 함께 표면화해야 E-E-A-T(특히 Trust)가 랭킹·AI 인용 게이트를 통과. 부정확·과장은 하드페일 → 발행 전 `slop-judge` 스킬(전역 설치 — 이 레포 외부라 상대링크 불가)로 YMYL 하드페일 0 확인.
 
 ---
 

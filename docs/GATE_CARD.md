@@ -22,10 +22,10 @@ reverify_by: 2026-Q4
 ## 1. `[AUTO]` — Quality Harness 기계 검사 (전 타입, 표기 예외만)
 
 1. **[H1]** 1개·엔티티+키워드 front-load.
-2. **[질문형 헤딩]** H2/H3 쿼리형. *(article 필수·home 최소·landing=FAQ)*
-3. **[즉답·TL;DR]** 섹션 직후 40~60단어(모바일 36~44) 자기완결 답 + 상단 TL;DR 30~80단어. *(home=히어로 1문장)*
-4. **[표/리스트]** 비교·자격·요금은 표/번호 리스트.
-5. **[메타]** Title 50~60자·≤600px·front-load(자동 `| Brand` 시 중복 금지) / Desc 155~160자·모바일 첫 110자 / 전 이미지 서술형 alt.
+2. **[질문형 헤딩]** 판정식: H2/H3 중 **≥50%가 의문 패턴 매치** — EN `^(How|Why|What|When|Where|Who|Which|Can|Do|Does|Is|Are|Should)\b` 또는 `\?$` / KR `(어떻게|왜|무엇|뭐|언제|어디|누가|얼마|방법|인가요|나요|까요)`. *(article 필수·home 최소 1개·landing=FAQ 섹션으로 충족)* — 질문의 자연스러움은 [JUDGE].
+3. **[즉답·TL;DR]** 판정식: 각 H2 직후 첫 문단 **단어수 40~60**(KR은 어절) + 문서 상단(첫 H2 이전)에 TL;DR 블록 존재·30~80단어. *(home=히어로 1문장)* — "자기완결성" 품질은 [JUDGE]로 위임.
+4. **[표/리스트]** 비교·자격·요금 언급 섹션에 `<table>`/번호 리스트 ≥1 존재.
+5. **[메타]** Title: **가중 길이 ≤60**(영문·숫자=1, 한글·전각=2로 가중합 — ≤600px 근사식)·키워드 front-load·자동 `| Brand` 시 중복 금지 / Desc: 155~160자 + **1차 키워드가 첫 110자 내 포함**(substring 검사) / 전 이미지 서술형 alt(빈 alt=장식 이미지만).
 6. **[정규화·국제화]** canonical=절대 URL + 언어판 self-canonical. KR/EN 짝이면 왕복(자기참조)+x-default hreflang·절대 URL·ISO(`ko`/`en`·지역 `KR`·**영국 `GB`≠UK**).
 7. **[스키마 생사]** 살아있는 타입만 신규. **죽은 리치결과 스키마 신규 금지**(FAQPage·HowTo 포함 10종) — FAQPage/HowTo는 파싱 목적만·Book Actions는 폐지 아님. 전체 생사표 SSOT=[`SCHEMA_JSONLD_CATALOG.md`](./SCHEMA_JSONLD_CATALOG.md).
 8. **[robots 미차단]** 인용·색인 검색봇을 `Disallow` 안 함(전체 목록 SSOT=[`ROBOTS_SITEMAP_RSS_TEMPLATES.md`](./ROBOTS_SITEMAP_RSS_TEMPLATES.md) §A) — 특히 한국 최우선 **`Yeti`(Naver)·`Daumoa`(Daum)** 누락 금지 + `nosnippet`/`max-snippet:0` 미설정. ⚠ `ChatGPT-User`는 robots 무시(사용자 개시 fetch, [V7]) → **검사 제외**. 학습봇(`Google-Extended`·`GPTBot`·`ClaudeBot`·`CCBot`)은 차단해도 검색/AIO 무영향 → **사업 판단**(게이트 필수 아님).

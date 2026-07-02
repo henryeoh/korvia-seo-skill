@@ -54,7 +54,7 @@ KORVIA 4사이트는 **3개 청중**을 동시에 서빙한다. 엔진 하나만
 > ⚠ **"62.86% = 8년 최고치"는 부정확.** 정확 표현은 위 표(3년 만에 재돌파). **시점 병기 필수 — 2025 연평균 62.86%, 2026 상반기 ~64%(2026-01~03 기준 ~64.39%로 추가 상승)**. 출처: [tech42](https://www.tech42.co.kr/네이버-2025년-국내-검색-점유율-62-86-3년-만에-60-재돌파/) · [economidaily](https://www.economidaily.com/view/20260104132353160)
 > ⚠ Bing vs 다음 소수점(예: Bing 3.12% / 4.12%)은 출처마다 다름 → "다음 약 3%·4위, Bing 근소 우위 3위"로만 서술.
 >
-> ⚠ **측정 방법론 차이 병기 (이 문서 = 한국 점유율 서술 SSOT; NAVER·DAUM 문서는 여기로 링크)**: 위 표는 **Internet Trend**(국내 패널·로그 기반, Naver 우위). 글로벌 트래킹-코드 기반 **StatCounter**는 상반된 그림을 준다 — **2026-06 기준 Google 45.91% > Naver 43.68%(격차 약 2.2%p)로 Google 근소 우위**, 이하 Bing 6.28%·CocCoc 1.22%·Yandex 1.14%·Daum 1.14%(확인 2026-07 [V10]). 두 소스는 측정 모수(국내 표본 vs 글로벌 방문자)가 달라 순위가 뒤바뀔 만큼 차이가 크다 → **단일 %를 단정하지 말고 소스·시점·방법론을 반드시 병기**. 출처: [StatCounter South Korea](https://gs.statcounter.com/search-engine-market-share/all/south-korea)
+> ⚠ **측정 방법론 차이 병기 (이 문서 = 한국 점유율 서술 SSOT; NAVER·DAUM 문서는 여기로 링크)**: 위 표는 **Internet Trend**(국내 패널·로그 기반, Naver 우위). 글로벌 트래킹-코드 기반 **StatCounter**는 상반된 그림을 준다 — **2026-06 기준 Google 45.91% > Naver 43.68%(격차 약 2.2%p)로 Google 근소 우위**, 이하 Bing 6.28%·CocCoc 1.22%·Yandex 1.14%·Daum 1.14%(확인 2026-07 [V10] — **'Search Engine Market Share' 표준 뷰 기준**: [gs.statcounter.com/search-engine-market-share/all/south-korea](https://gs.statcounter.com/search-engine-market-share/all/south-korea)). ⚠ **StatCounter는 뷰별로 수치가 다르다**: 같은 달 'search-engine-**host**-market-share' 뷰는 Google ~44.9%(외부감사 2026-07-02 실측) — 호스트 분리 집계 차이. → **소수점을 단정 인용하지 말고 "StatCounter 기준 구글 근소 우위(접전)" 방향만 채택**, 인용 시 뷰·시점 명기. 두 소스(Internet Trend vs StatCounter)는 측정 모수(국내 표본 vs 글로벌 방문자)가 달라 순위가 뒤바뀔 만큼 차이가 크다 → **단일 %를 단정하지 말고 소스·시점·방법론을 반드시 병기**.
 
 ### 1.2 2025~2026 KR 대전환 (실전 영향)
 

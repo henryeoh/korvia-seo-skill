@@ -31,9 +31,9 @@ that ranks in both traditional and AI search engines.
 4. **AI Cliché Ban**: No AI cliché / filler / template phrasing. The ban list + AI-SLOP signal taxonomy = `CONTENT_AUTORULES` + `slop-judge` (§12.23 연계, SSOT). Do NOT restate the phrase list here — single SSOT, no drift.
 5. **Data Requirement**: Every section must contain at least 1 specific statistic, case study, or real example
 6. **External Links**: At least 1 authoritative external source link per major claim
-7. **Author Section**: ALWAYS include author name, credentials, and brief bio
-8. **Internal Links**: Minimum 2-3 naturally placed per page
-9. **After writing**: ALWAYS request /harness-check execution
+7. **Author Section**: **article page-type only** — author name, credentials, brief bio + profile link. homepage/landing = Organization entity instead (page-type 분기 SSOT = `docs/GATE_CARD.md` §0 / `CONTENT_AUTORULES` §12 — 억지 저자블록 삽입 금지)
+8. **Internal Links**: threshold = GATE_CARD `[AUTO]` 내부링크 항목(관련 3~5 + 허브, 서술형 앵커) — do NOT restate a different number here
+9. **After writing**: ALWAYS request `/gate` execution (legacy alias: `/harness-check` — same chain, GATE_CARD [AUTO] → slop-judge [JUDGE])
 
 ## Content Structure (Pyramid Principle + SEO)
 
@@ -53,7 +53,8 @@ H1 [Primary Keyword + Value Proposition]
 |   +-- A: Direct answer, length per CONTENT_AUTORULES SSOT
 |
 +-- CTA Section
-    +-- Schema: FAQPage + Article + BreadcrumbList
+    +-- Schema: page-type별 살아있는 타입만 (생사표 SSOT = docs/SCHEMA_JSONLD_CATALOG.md;
+        FAQPage는 Google 리치결과 폐지 — Naver·AI 파싱 목적 캐비앗 하에서만, Article+BreadcrumbList는 article 타입)
 ```
 
 ## E-E-A-T Signal Injection Guide
