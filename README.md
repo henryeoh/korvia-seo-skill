@@ -111,6 +111,31 @@ Proven orchestration for 10+ file bulk operations:
 ```
 5 consecutive rounds on production delivered zero blockers, 100+ files modified.
 
+## 🌏 Multi-Engine Indexing & Korean-Search KB (NEW 2026-07)
+
+한국(**Naver·Daum 최우선**) + Google/Bing/Yahoo + AI 답변엔진(GEO/AEO)까지 **색인·노출 전 과정**을 다루는 12편 지식팩. 각 문서 상단 `## 0. 자동 적용 규칙(Auto-apply)` 블록 = 작성 에이전트/발행 게이트가 기계적으로 적용. 실제 콘솔 기준: 네이버 서치어드바이저 `searchadvisor.naver.com/console/board`, 다음 웹마스터도구 `webmaster.daum.net/dashboard`.
+
+| 문서 | 역할 |
+|------|------|
+| `docs/MULTI_ENGINE_MASTER_2026.md` | 허브 — 청중 매핑·크로스엔진 색인 파이프라인·결정 매트릭스·발행 런북 |
+| `docs/CONTENT_AUTORULES.md` | ★ **발행 전 게이트** — 모든 기사/홈페이지 자동적용 체크리스트(엔진·GEO·한국·이중언어·YMYL) |
+| `docs/NAVER_SEARCHADVISOR_PLAYBOOK.md` | 네이버 서치어드바이저 운영 + C-Rank/DIA/노출영역/AI 검색 |
+| `docs/DAUM_KAKAO_SEARCH.md` | webmaster.daum.net 대시보드 + Daumoa + **별도 제출**(IndexNow 미커버) |
+| `docs/GOOGLE_SEARCH_CONSOLE_INDEXING.md` | GSC 운영 + 색인 파이프라인 + Indexing API 범위·한도 |
+| `docs/GOOGLE_SERP_STRUCTURED_AI_2026.md` | 리치결과 생사표 + E-E-A-T + AI Overviews/AI Mode |
+| `docs/BING_YAHOO_INDEXNOW.md` | Bing WMT + IndexNow + Bing→ChatGPT/Copilot grounding |
+| `docs/GEO_AEO_AI_ENGINES_2026.md` | 엔진별 인용 메커니즘 + llms.txt 현실 + AI봇 + 측정 |
+| `docs/SCHEMA_JSONLD_CATALOG.md` | 복붙 JSON-LD 템플릿(타입별·엔진 지원·생사) |
+| `docs/ROBOTS_SITEMAP_RSS_TEMPLATES.md` | robots(AI봇 정책)·sitemap·RSS·IndexNow 키 템플릿 |
+| `docs/PROJECT_STACK_PLAYBOOK.md` | Next.js/WordPress 스택별 구현 레시피 |
+| `docs/LOCAL_SEO_NAVER_PLACE_GBP.md` | 네이버 스마트플레이스 + Google Business Profile(로컬/지도) |
+
+**SSOT 맵(중복 사실은 여기부터 고칠 것)**: 스키마 생사 = `SCHEMA_JSONLD_CATALOG` · IndexNow/AI봇 UA/robots = `ROBOTS_SITEMAP_RSS_TEMPLATES`(+ Bing 심화 `BING_YAHOO_INDEXNOW`) · CWV 임계 = `CRUX_LIGHTHOUSE_INTERPRETATION`/`CLS_SEVEN_SOURCES` · GEO 인용/llms.txt = `GEO_AEO_AI_ENGINES_2026` · 발행 게이트 = `CONTENT_AUTORULES`.
+
+> ⚠ **알려진 부채**: 위 사실 일부가 여러 문서에 중복 기술됨 — FAQ 리치 API 일몰(2026-08)·AI봇 UA 변경 시 **SSOT 문서부터 고치고 나머지는 링크로** 유지.
+>
+> **검증 상태(2026-07-01)**: 34-에이전트 리서치 → 적대검증 → 집필 → 비평(A−) → P0/P1 정정 → adversarial 재검증(6/6 RESOLVED). 컷오프(2026-01) 이후 콘솔/API는 각 문서 ⚠ 플래그대로 **사용 전 재확인**.
+
 ## Key Features
 
 ### 2026 SEO Standards

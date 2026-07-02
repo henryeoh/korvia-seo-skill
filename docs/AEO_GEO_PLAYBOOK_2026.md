@@ -4,6 +4,8 @@
 > `.claude/agents/technical-seo.md`(schema/llms.txt/robots)를 사용하고, 이 문서는 **왜 / 무엇을 / 근거 수치**를 담는 상위 전략 레이어다.
 >
 > Locked in: 2026-05-29 · Owner: Henry Oh (KORVIA)
+>
+> ⚠ **2026-07 갱신 안내**: 이 문서 일부 지침(FAQPage/HowTo schema 주입, llms.txt 필수)은 이후 플랫폼 변경으로 **정정**됨. 최신·정합 기준은 멀티엔진 KB를 따르라 — 스키마 생사=[`SCHEMA_JSONLD_CATALOG.md`](./SCHEMA_JSONLD_CATALOG.md) · GEO/AEO 심화=[`GEO_AEO_AI_ENGINES_2026.md`](./GEO_AEO_AI_ENGINES_2026.md) · 발행 전 게이트=[`CONTENT_AUTORULES.md`](./CONTENT_AUTORULES.md) · 허브=[`MULTI_ENGINE_MASTER_2026.md`](./MULTI_ENGINE_MASTER_2026.md).
 
 ---
 

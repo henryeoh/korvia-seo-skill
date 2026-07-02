@@ -1,6 +1,8 @@
 # Korvia Web Playbook — SEO + Performance + Accessibility
 > Distilled from 2026-04-17~18 www.korvia.com audit/implementation session (21 commits)
 > Use as checklist for any new Next.js page or site-wide audit
+>
+> ⚠ **2026-07 갱신 안내**: schema 일부(FAQPage/HowTo/SearchAction)는 이후 Google 리치결과 폐지로 **정정**됨. 스키마=[`SCHEMA_JSONLD_CATALOG.md`](./SCHEMA_JSONLD_CATALOG.md), robots/sitemap=[`ROBOTS_SITEMAP_RSS_TEMPLATES.md`](./ROBOTS_SITEMAP_RSS_TEMPLATES.md), 발행 전 게이트=[`CONTENT_AUTORULES.md`](./CONTENT_AUTORULES.md)를 최신 기준으로 따르라.
 
 ---
 

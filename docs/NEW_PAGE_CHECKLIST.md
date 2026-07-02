@@ -4,6 +4,8 @@ description: 새 페이지 만들 때마다 최소 적용할 SEO+CLS+a11y+성능
 type: reference
 originSessionId: 10654995-dff2-4b5c-a086-7c644c9a3bb1
 ---
+
+> ⚠ **2026-07 갱신 안내**: §B(Schema)의 FAQPage/HowTo 항목은 이후 폐지로 **정정**됨. 새 페이지 발행 게이트의 최신·완전판은 [`CONTENT_AUTORULES.md`](./CONTENT_AUTORULES.md)(멀티엔진·GEO·한국엔진·이중언어 포함)를 사용하고, 이 17항목은 Next.js CLS/a11y 보조 체크로 병행.
 **목적**: 새 Next.js 페이지나 섹션 만들 때마다 "최소한 이 17개는 체크"
 
 ## A. 메타데이터 (6개)
