@@ -1,3 +1,8 @@
+---
+last_verified: 2026-07
+reverify_by: 2026-Q4
+---
+
 # 멀티엔진 색인·노출 마스터 (허브) — 2026
 
 > Generated 2026-07-01 · Owner: Henry Oh (KORVIA) · ⚠ 콘솔/API 변경은 사용 전 재확인
@@ -10,11 +15,13 @@
 
 작성자·에이전트가 **기계적으로** 따를 항목. 판단 불필요.
 
+> **런타임 실행 카드**: 이 §0과 [`CONTENT_AUTORULES.md`](./CONTENT_AUTORULES.md) 마스터 게이트에서 파생된 발행 실행 카드는 [`GATE_CARD.md`](./GATE_CARD.md)(생성됨 2026-07-02)다. GATE_CARD는 파생된 실행 카드일 뿐 **승인 주체가 아니며**, 발행 반려/승인 권한은 독립 체인(**Quality Harness [AUTO] 실행 + slop-judge [JUDGE] 판정**, author≠judge)에만 있다.
+
 1. **한 URL = 한 canonical(절대 https URL)**. 언어판은 각자 self-canonical(ko는 ko를 가리킴). 정규 도메인(www/non-www, trailing slash) 사이트 전역 통일.
 2. **robots.txt에 `Sitemap:` 절대 URL 라인 필수** + Yeti(Naver)·Daumoa(Daum)·Googlebot·Bingbot·인용봇(OAI-SearchBot·PerplexityBot·Claude-SearchBot) **Disallow 금지**. `Disallow: /` 회귀 점검(전체 색인 제외 방지).
 3. **소유확인 수단(DNS TXT / HTML 파일 / meta 태그) 절대 삭제 금지.** Naver 소유확인은 **유효기간 1년**(만료 30일 전 이메일) → 연장 캘린더 태스크 등록.
 4. **Naver·Google 소유확인 meta·검증파일은 서버 렌더 `<head>`에 유지**(클라이언트 전용 렌더로 빼면 검증 실패). `<body>`/`<frame>`/meta refresh/JS 리다이렉트 페이지는 Naver 검증에서 제외됨.
-5. **발행/수정 직후 IndexNow POST**(변경 URL만) → Bing·Naver·Yandex·Seznam·Yep·**Amazon**(~2025 합류) 즉시 통보(+Cloudflare CDN native 통합). **Google은 IndexNow 미참여** → sitemap `lastmod` + GSC로 커버.
+5. **발행/수정 직후 IndexNow POST**(변경 URL만) → **Bing·Naver·Yandex·Seznam·Yep·Amazon** 참여 엔진에 즉시 통보(한 참여 엔진 엔드포인트에 제출하면 나머지 참여 엔진으로 자동 공유·전파, +Cloudflare CDN native 통합). **Google·Daum은 IndexNow 미참여** → Google은 sitemap `lastmod`+GSC로, Daum은 `webmaster.daum.net` 수집요청으로 커버. (참여 엔진 목록 SSOT=[`BING_YAHOO_INDEXNOW.md`](./BING_YAHOO_INDEXNOW.md); IndexNow 공식 FAQ 확인 2026-07 [V8])
 6. **sitemap = canonical·색인대상(200·noindex 아님)만**. 파일당 **50,000 URL / 50MB(비압축)** 초과 시 sitemap index 분할. **Naver·Daum은 사이트당 최상위 sitemap 1개**만 제출 → 단일 index URL 유지.
 7. **Indexing API(Google)는 JobPosting / BroadcastEvent 페이지에만.** 일반 페이지 색인 가속에 쓰면 수동조치(manual action) 리스크.
 8. **죽은 리치결과 스키마 신규 생성 금지**: Google FAQPage·HowTo·Sitelinks Searchbox·Course Info·Estimated Salary·Learning Video·Special Announcement·Vehicle Listing·ClaimReview·Practice Problem (§4 표 참조). **단 Naver에선 FAQ·HowTo가 여전히 유효** → 엔진별 분리 표기.
@@ -46,6 +53,8 @@ KORVIA 4사이트는 **3개 청중**을 동시에 서빙한다. 엔진 하나만
 
 > ⚠ **"62.86% = 8년 최고치"는 부정확.** 정확 표현은 위 표(3년 만에 재돌파). **시점 병기 필수 — 2025 연평균 62.86%, 2026 상반기 ~64%(2026-01~03 기준 ~64.39%로 추가 상승)**. 출처: [tech42](https://www.tech42.co.kr/네이버-2025년-국내-검색-점유율-62-86-3년-만에-60-재돌파/) · [economidaily](https://www.economidaily.com/view/20260104132353160)
 > ⚠ Bing vs 다음 소수점(예: Bing 3.12% / 4.12%)은 출처마다 다름 → "다음 약 3%·4위, Bing 근소 우위 3위"로만 서술.
+>
+> ⚠ **측정 방법론 차이 병기 (이 문서 = 한국 점유율 서술 SSOT; NAVER·DAUM 문서는 여기로 링크)**: 위 표는 **Internet Trend**(국내 패널·로그 기반, Naver 우위). 글로벌 트래킹-코드 기반 **StatCounter**는 상반된 그림을 준다 — **2026-06 기준 Google 45.91% > Naver 43.68%(격차 약 2.2%p)로 Google 근소 우위**, 이하 Bing 6.28%·CocCoc 1.22%·Yandex 1.14%·Daum 1.14%(확인 2026-07 [V10]). 두 소스는 측정 모수(국내 표본 vs 글로벌 방문자)가 달라 순위가 뒤바뀔 만큼 차이가 크다 → **단일 %를 단정하지 말고 소스·시점·방법론을 반드시 병기**. 출처: [StatCounter South Korea](https://gs.statcounter.com/search-engine-market-share/all/south-korea)
 
 ### 1.2 2025~2026 KR 대전환 (실전 영향)
 
@@ -74,8 +83,8 @@ KORVIA 4사이트는 **3개 청중**을 동시에 서빙한다. 엔진 하나만
   │  GOOGLE   │        │   BING (WMT)  │      │ IndexNow 1 POST│     │ NAVER Search   │    │  DAUM    │
   │   GSC     │        │               │      │ (Bing·Naver·   │     │  Advisor       │    │          │
   │           │        │               │      │  Yandex·Seznam │     │                │    │          │
-  │ sitemap↑  │        │ sitemap↑      │      │  ·Yep 자동전파)│     │ sitemap+RSS↑   │    │ 검색등록 │
-  │ URL검사→  │        │ URL Submit    │      │                │     │ 웹페이지수집→  │    │ +수집요청│
+  │ sitemap↑  │        │ sitemap↑      │      │  ·Yep·Amazon   │     │ sitemap+RSS↑   │    │ 검색등록 │
+  │ URL검사→  │        │ URL Submit    │      │  자동전파)     │     │ 웹페이지수집→  │    │ +수집요청│
   │ 색인요청  │        │ (≤10k/day)    │      │ 변경 URL만     │     │ (한도 준수)    │    │ (Seed)   │
   │ (핵심만)  │        │ ★IndexNow 1순위│      │ ≤10,000/req    │     │ ★IndexNow도지원│    │          │
   └─────┬─────┘        └───────┬───────┘      └───────┬────────┘     └───────┬────────┘    └────┬─────┘
@@ -96,7 +105,7 @@ KORVIA 4사이트는 **3개 청중**을 동시에 서빙한다. 엔진 하나만
 ### 2.1 발행 시 실제 제출 체크리스트 (복붙용)
 
 - [ ] **sitemap `<lastmod>`** 실제 변경시각으로 갱신(priority/changefreq는 Google 무시 → 신뢰신호로 쓰지 않음).
-- [ ] **IndexNow POST** → `https://api.indexnow.org/indexnow` (변경 URL만). 한국인 청중 확실 커버가 필요하면 **Naver 직접 엔드포인트 병행**: `https://searchadvisor.naver.com/indexnow?url={url}&key={key}` (⚠ 제네릭→Naver 실전파는 공식 미명시).
+- [ ] **IndexNow POST** → `https://api.indexnow.org/indexnow` (변경 URL만). 한국인 청중 확실 커버가 필요하면 **Naver 직접 엔드포인트 병행**: `https://searchadvisor.naver.com/indexnow?url={url}&key={key}` (Naver는 IndexNow **공식 지원** — 2023-07~, `guide/indexnow-request`; 제네릭 엔드포인트 제출도 참여 엔진 자동 공유로 Naver에 전파됨. 참여 엔진 SSOT=[`BING_YAHOO_INDEXNOW.md`](./BING_YAHOO_INDEXNOW.md)).
 - [ ] **GSC**: sitemap은 자동 발견하지만, **핵심 랜딩·대규모 수정만** URL 검사 → 색인 생성 요청(하루 한도 있음, 같은 URL 반복 금지).
 - [ ] **Bing WMT**: IndexNow가 1순위(Microsoft 권장). 추가로 URL Submit(검증 사이트 ≤10,000/day).
 - [ ] **Naver**: `요청 > 웹페이지 수집`에 신규/중요 갱신 URL 등록(한도 준수 — §3 표). 블로그/뉴스형은 `요청 > RSS 제출`도.
@@ -269,7 +278,10 @@ export async function POST(req: Request) {
 - **인용봇 허용**(차단=인용 탈락): OAI-SearchBot(ChatGPT), PerplexityBot, Claude-SearchBot, Applebot, Googlebot, Bingbot. **UA 토큰으로 매칭**(버전 숫자 X — GPTBot/1.1·OAI-SearchBot/1.0 등 갱신됨).
 - **robots로 차단 가능/불가**: Claude-User=**준수(차단 가능)**, Perplexity-User·ChatGPT-User=무시(차단 불가). ⚠ ChatGPT-User 미준수는 2025-12 정책 변경(과거엔 준수) — moving target, 확인일 병기.
 - **Google-Extended**: Gemini 학습/그라운딩만 제어. **AI Overviews는 통제 못 함**(Googlebot 라이브 인덱스 사용) → AIO 억제 목적의 nosnippet 금지(일반 스니펫까지 죽음). ⚠ Google 공식 vs 일부 3자 SEO 소스 상충 — Google 1차 소스 근거로 표기.
-- **측정**: GSC Gen-AI 리포트(impressions) + 서버로그 AI봇 UA(`GPTBot|OAI-SearchBot|ClaudeBot|Claude-SearchBot|PerplexityBot`) + Bing AI Performance. AI봇 위장 필터=벤더 공식 검증 JSON(claude.com/crawling/bots.json, perplexity.com/perplexitybot.json)의 IP 대조.
+- **측정 = 3계층**(계층별 상세·전용 도구·Naver 측정 공백은 [`GEO_AEO_AI_ENGINES_2026.md`](./GEO_AEO_AI_ENGINES_2026.md) §E가 SSOT — 값은 거기서만 보유):
+  1. **검색 노출** — GSC Gen-AI 성능 리포트(impressions-only) + Bing AI Performance(인용).
+  2. **AI 참조 트래픽** — GA4 기본 채널 그룹 **'AI Assistants'**(2026-05-13 추가, referrer 기반 자동 분류; ⚠ Google AIO/AI Mode는 Organic Search로 분류되어 제외) + 전용 GEO 추적 도구(Otterly.AI·Profound 등).
+  3. **봇 크롤** — 서버로그 AI봇 UA(`GPTBot|OAI-SearchBot|ClaudeBot|Claude-SearchBot|PerplexityBot`) + Cloudflare AI Crawl Control(전 플랜 제공, 크롤러별 요청·CSV). AI봇 위장 필터=벤더 공식 검증 JSON(claude.com/crawling/bots.json, perplexity.com/perplexitybot.json)의 IP 대조.
 - **IndexNow 경유 AI 가속**: Bing·Naver 색인 → ChatGPT(Bing)·Naver AI 브리핑 인용 후보에 빠르게 진입.
 
 > ⚠ **llms.txt 재평가**: [`AEO_GEO_PLAYBOOK_2026.md`](./AEO_GEO_PLAYBOOK_2026.md)는 llms.txt를 권장했으나, **2026-07 검증상 주요 검색·AI 엔진은 llms.txt를 랭킹/인용에 미반영**(Google 공식 불필요, OpenAI/Anthropic/Perplexity 자동 판독 커밋 없음, 500M 봇방문 中 조준 408건). 실사용=IDE/코딩 에이전트. → **"인용 지렛대" 아님, 저ROI 실험**으로 격하. 만들더라도 정적 저비용, sitemap·크롤러빌리티를 대체하지 않음. 출처: [SEJ](https://www.searchenginejournal.com/google-says-llms-txt-is-purely-speculative-for-now/577576/)

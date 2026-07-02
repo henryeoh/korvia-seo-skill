@@ -1,4 +1,4 @@
-# korvia-seo-skill v2
+# korvia-seo-skill v3
 
 SEO Harness Team — Claude Code Skill for comprehensive SEO/SEM/GEO/CWV optimization.
 
@@ -55,10 +55,11 @@ cp -r korvia-seo-skill/.claude/agents /path/to/project/.claude/
 
 ## Documentation (NEW in v2)
 
-### 🤖 `docs/AEO_GEO_PLAYBOOK_2026.md`
+### 🤖 `docs/AEO_GEO_PLAYBOOK_2026.md`  · ⚠ LEGACY
 AI 검색 시대 상위 전략 레퍼런스 (2026-05-29 lock-in). SEO/AEO/GEO 3-레이어 정의, Princeton 정량 근거(+41% 인용문/+30% 통계/+30% 출처), 플랫폼별 인용 성향(ChatGPT Wikipedia 48% / Perplexity Reddit 47% / 중복 11%), schema+llms.txt 토대, 측정 툴링, 한국/네이버 맥락, KORVIA 적용 3-Phase 플랜. 운영 체크리스트는 `geo-optimizer.md` 참조.
+> ⚠ **SUPERSEDED (부분) — KEEP for 전략 why**: 정량 수치·llms.txt·스키마 생사는 폐지/정정됨 → SSOT는 `GEO_AEO_AI_ENGINES_2026 §B/§Δ` · `SCHEMA_JSONLD_CATALOG` · `ROBOTS_SITEMAP_RSS_TEMPLATES §A`.
 
-### 📘 `docs/WEB_PLAYBOOK.md`
+### 📘 `docs/WEB_PLAYBOOK.md`  · ⚠ LEGACY
 Full 16-category SEO + Performance + a11y playbook distilled from 21+ production commits. Every category has concrete code patterns, gotchas discovered, and verification steps. Covers:
 - robots/sitemap/llms.txt (incl. env `.trim()` bug)
 - Schema.org entity graph (Organization + WebSite + Service + FAQPage + HowTo + Event + CollectionPage)
@@ -68,8 +69,9 @@ Full 16-category SEO + Performance + a11y playbook distilled from 21+ production
 - Security headers (HSTS/COOP/CORP/CSP Report-Only)
 - CrUX vs Lighthouse interpretation
 - Next.js gotchas (styled-jsx client-only, Tailwind v4)
+> ⚠ **SUPERSEDED (부분) — KEEP for Next.js 구현 패턴**: robots/sitemap/스키마 그래프(FAQPage/HowTo 포함) 사실은 SSOT로 이관 — FAQ/HowTo 리치결과는 2026 폐지(온페이지 파싱만), robots 목록은 `ROBOTS_SITEMAP_RSS_TEMPLATES §A`.
 
-### 📋 `docs/NEW_PAGE_CHECKLIST.md`
+### 📋 `docs/NEW_PAGE_CHECKLIST.md`  · ⚠ LEGACY
 17-point checklist for every new Next.js page. Use as a pre-commit gate. Split into:
 - A. Metadata (6 items)
 - B. Schema.org JSON-LD (3 items)
@@ -77,6 +79,7 @@ Full 16-category SEO + Performance + a11y playbook distilled from 21+ production
 - D. CLS defense (3 items)
 - E. Accessibility (1 item)
 - Plus: page type-specific additional checks + validation commands
+> ⚠ **SUPERSEDED (부분) — KEEP for 프리커밋 체크리스트**: 발행 게이트 자체는 `docs/CONTENT_AUTORULES.md` 마스터 게이트([AUTO]) + `slop-judge`([JUDGE])가 우선(파생 런타임 카드 `docs/GATE_CARD.md` **생성됨(2026-07-02)**).
 
 ### 🎯 `docs/CLS_SEVEN_SOURCES.md`
 7 most common CLS causes in Next.js + Tailwind v4:
@@ -113,7 +116,7 @@ Proven orchestration for 10+ file bulk operations:
 
 ## 🌏 Multi-Engine Indexing & Korean-Search KB (NEW 2026-07)
 
-한국(**Naver·Daum 최우선**) + Google/Bing/Yahoo + AI 답변엔진(GEO/AEO)까지 **색인·노출 전 과정**을 다루는 12편 지식팩. 각 문서 상단 `## 0. 자동 적용 규칙(Auto-apply)` 블록 = 작성 에이전트/발행 게이트가 기계적으로 적용. 실제 콘솔 기준: 네이버 서치어드바이저 `searchadvisor.naver.com/console/board`, 다음 웹마스터도구 `webmaster.daum.net/dashboard`.
+한국(**Naver·Daum 최우선**) + Google/Bing/Yahoo + AI 답변엔진(GEO/AEO)까지 **색인·노출 전 과정**을 다루는 **12편** 지식팩(2026-07 신설 — 아래 표가 정확한 목록. `docs/`의 v2 기존 8편과 레거시 `AEO_GEO_PLAYBOOK_2026`는 이 12편에 미포함). 각 문서 상단 `## 0. 자동 적용 규칙(Auto-apply)` 블록은 훅이 아니라 **작성/기술 에이전트의 read-path로 로드**된다 — 발행 시 `docs/CONTENT_AUTORULES.md`의 마스터 게이트(규칙 SSOT, §0)를 먼저 읽고, 페이지가 특정 엔진을 노릴 때만 해당 엔진 §0(~300토큰)을 추가로 연다. 전문(§1+)은 게이트 실패 시에만. 파생 런타임 카드 `docs/GATE_CARD.md`(각 §0 블록의 중복제거 합본, ≤~900토큰) **생성됨(2026-07-02)**. 실제 콘솔 기준: 네이버 서치어드바이저 `searchadvisor.naver.com/console/board`, 다음 웹마스터도구 `webmaster.daum.net/dashboard`.
 
 | 문서 | 역할 |
 |------|------|
@@ -130,7 +133,18 @@ Proven orchestration for 10+ file bulk operations:
 | `docs/PROJECT_STACK_PLAYBOOK.md` | Next.js/WordPress 스택별 구현 레시피 |
 | `docs/LOCAL_SEO_NAVER_PLACE_GBP.md` | 네이버 스마트플레이스 + Google Business Profile(로컬/지도) |
 
-**SSOT 맵(중복 사실은 여기부터 고칠 것)**: 스키마 생사 = `SCHEMA_JSONLD_CATALOG` · IndexNow/AI봇 UA/robots = `ROBOTS_SITEMAP_RSS_TEMPLATES`(+ Bing 심화 `BING_YAHOO_INDEXNOW`) · CWV 임계 = `CRUX_LIGHTHOUSE_INTERPRETATION`/`CLS_SEVEN_SOURCES` · GEO 인용/llms.txt = `GEO_AEO_AI_ENGINES_2026` · 발행 게이트 = `CONTENT_AUTORULES`.
+**SSOT 맵 (owner만 값 보유 · 나머지 문서는 링크만 · 중복 사실은 owner부터 고칠 것)**:
+
+| 사실 도메인 | Owner (값 보유) |
+|------------|-----------------|
+| robots 템플릿 · AI봇 UA 목록 | `ROBOTS_SITEMAP_RSS_TEMPLATES §A` |
+| IndexNow 참여 목록 | `BING_YAHOO_INDEXNOW` |
+| 한국 검색 점유율 | `MULTI_ENGINE_MASTER_2026` (각주) |
+| 네이버 플레이스/지도 랭킹 | `LOCAL_SEO_NAVER_PLACE_GBP §1-6` |
+| GEO 정량 수치(Princeton 등) · llms.txt 현실 | `GEO_AEO_AI_ENGINES_2026 §B/§Δ` |
+| 스키마 리치결과 생사 | `SCHEMA_JSONLD_CATALOG` |
+| CWV 임계 | `CRUX_LIGHTHOUSE_INTERPRETATION` / `CLS_SEVEN_SOURCES` |
+| 발행 게이트 | `CONTENT_AUTORULES` (규칙 SSOT · 마스터 게이트) — 파생 런타임 [AUTO] 카드 `docs/GATE_CARD.md` **생성됨(2026-07-02)** |
 
 > ⚠ **알려진 부채**: 위 사실 일부가 여러 문서에 중복 기술됨 — FAQ 리치 API 일몰(2026-08)·AI봇 UA 변경 시 **SSOT 문서부터 고치고 나머지는 링크로** 유지.
 >
@@ -145,12 +159,12 @@ Proven orchestration for 10+ file bulk operations:
 
 ### GEO (Generative Engine Optimization)
 - ChatGPT, Perplexity, Gemini, Claude citation optimization
-- llms.txt file generation for AI crawler discovery
-- robots.txt AI crawler configuration (11 bots allowlisted, Bytespider blocked)
+- llms.txt generation — ⚠ **저ROI · 선택**: Google은 미사용을 명시. 필수 아님, 실험으로만 취급 (SSOT `GEO_AEO_AI_ENGINES_2026`)
+- robots.txt AI 크롤러 설정 — ⚠ 봇 목록/수치의 SSOT = `ROBOTS_SITEMAP_RSS_TEMPLATES §A` (여기 "11 bots"는 참고치, §A 실목록 우선). 인용봇(OAI-SearchBot/PerplexityBot/Claude-SearchBot) 허용 · 학습봇(GPTBot/ClaudeBot)은 별도 사업 토글 · Bytespider는 WAF 차단
 - Quick Answer Blocks for AI Overview targeting
 
 ### AI Penalty Avoidance
-- 24-item Quality Harness Gate
+- Quality Harness gate — v3에서 `CONTENT_AUTORULES` 마스터 게이트(규칙 SSOT)의 [AUTO] 실행기로 재정의(구 24항목 리스트 대체; 파생 런타임 카드 `docs/GATE_CARD.md` **생성됨(2026-07-02)**). 최종 무결성 판정은 `slop-judge` [JUDGE](author≠judge)
 - AI expression pattern detection and removal
 - E-E-A-T signal injection verification
 - Author attribution enforcement
@@ -204,9 +218,19 @@ docs/                            # NEW in v2
   CRUX_LIGHTHOUSE_INTERPRETATION.md  # Metric decoding
   CSP_ALLOWLIST.md               # 3rd-party fan-out
   3LAYER_AGENT_PIPELINE.md       # Bulk orchestration
+  AEO_GEO_PLAYBOOK_2026.md       # ⚠ LEGACY (전략 why)
+  # + 2026-07 멀티엔진 KB 12편(위 'Multi-Engine' 표) + 파생 카드 GATE_CARD.md·STALE_REGISTER.md(생성됨 2026-07-02)
 ```
 
 ## Changelog
+
+### v3 (2026-07)
+Multi-engine indexing KB 교정 웨이브 + 스킬 배선(read-path). SSOT=`reports/2026-07-01-multi-engine-seo-kb/` + `reports/2026-07-02-seo-skill-critique-and-site-replan/`.
+- **멀티엔진 KB 교정 웨이브** — 34-에이전트 리서치 산출물(12편 지식팩)에 adversarial 재검증으로 도출한 P0/P1 정정을 반영: Daum≠Bing 백엔드(자체 Daumoa)·**Daum IndexNow 미참여**(webmaster.daum.net 별도 제출)·FAQPage/HowTo 리치결과 2026 폐지(온페이지 파싱 타깃만)·llms.txt 저ROI·robots 하우스 기본=학습봇 허용 + Bytespider만 WAF 차단.
+- **발행 게이트 = `CONTENT_AUTORULES` 마스터 게이트(규칙 SSOT)** — 승인 주체 아님: [AUTO] 실행 = Quality Harness · [JUDGE] 판정 = `slop-judge`(author≠judge). 파생 런타임 카드 `docs/GATE_CARD.md`(각 문서 §0 블록의 중복제거 합본 = 티어-1 발행 카드, ≤~900토큰) **생성됨(2026-07-02)**.
+- **read-path 배선** — 46,700단어 KB를 훅이 아닌 **에이전트 read-path**로 실행면에 연결(정책상 UserPromptSubmit 슬롯은 mindvault→telegram 점유). content-writer/technical-seo가 `CONTENT_AUTORULES` 마스터 게이트(→ 파생 시 GATE_CARD) → 엔진별 §0 → (게이트 실패 시)전문 순으로 티어드 로드. 새 명령 `/gate`·`/multi-engine-submit`(SKILL.md).
+- **측정 3계층** — GSC 생성형AI 리포트 + Bing AI Performance + Naver 사이트진단 + 서버로그 AI봇 히트를 규칙→측정→개선 루프로(owner + 데이터스토어). 정적 KB에서 폐루프 제품으로의 전환 첫 단계.
+- **레거시 3문서 = KEEP + SUPERSEDED(부분) 배지** — `WEB_PLAYBOOK`(Next.js 구현부)·`NEW_PAGE_CHECKLIST`(프리커밋 게이트)·`AEO_GEO_PLAYBOOK_2026`(전략 why)는 고유가치로 보존하되, robots/스키마/llms.txt/GEO 수치 등 중복 사실은 SSOT 문서가 우선(각 문서 상단 배지 참조).
 
 ### v2 (2026-04-18)
 Production-proven additions from www.korvia.com 2-day sweep (21+ commits):

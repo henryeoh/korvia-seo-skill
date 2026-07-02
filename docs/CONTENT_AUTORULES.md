@@ -1,8 +1,13 @@
+---
+last_verified: 2026-07
+reverify_by: 2026-Q4
+---
+
 # 콘텐츠 자동적용 규칙 (발행 전 게이트) — CONTENT_AUTORULES
 
 > Generated 2026-07-01 · Owner: Henry Oh (KORVIA) · ⚠ 콘솔/API/봇 user-agent/스키마 지원 여부는 사용 전 각 공식 문서에서 재확인.
 
-이 문서는 `korvia-seo-skill/docs/`의 **콘텐츠 작성(how-to-write) 게이트** 레이어다. 모든 신규 기사·홈페이지에 기계적으로 자동 반영할 **번호형 발행-전 게이트**를 담는다. 이 문서는 *무엇을 써야 하나(WHAT)*만 다루고, *어떻게 구현/제출하나(HOW)*는 아래 참조 레이어로 라우팅한다(중복 금지·상호링크).
+이 문서는 `korvia-seo-skill/docs/`의 **콘텐츠 작성(how-to-write) 게이트** 레이어다. 신규 기사·홈페이지·랜딩에 **작성자 에이전트가 read-path로 적용**하는 **번호형 발행-전 게이트(규칙 SSOT = §12)**를 담으며, page-type별 적용·[AUTO]/[JUDGE] 판정 방식은 §12가 원본이다. 이 문서는 *무엇을 써야 하나(WHAT)*만 다루고, *어떻게 구현/제출하나(HOW)*는 아래 참조 레이어로 라우팅한다(중복 금지·상호링크).
 
 **게이트 레이어(이 문서 그룹)**
 
@@ -33,9 +38,9 @@
 
 ---
 
-## 0. 자동 적용 규칙 (Auto-apply) — 작성자 에이전트/훅용 요약
+## 0. 자동 적용 규칙 (Auto-apply) — 작성자 에이전트 read-path용 요약
 
-> 모든 신규 페이지에 **기계적으로** 적용. 각 항목은 명령형·측정가능. 위반 시 §12 게이트에서 반려.
+> **§12 마스터 게이트(규칙 SSOT)에서 파생된 작성자 에이전트 read-path용 요약**이다. 각 항목은 명령형이나 일부만 기계 검사 가능(AUTO/JUDGE 구분과 page-type 적용은 §12가 원본). 이 요약 자체에는 **판정·반려 권한이 없다** — 실제 반려/승인은 독립 체인(Quality Harness `[AUTO]` 실행 + slop-judge `[JUDGE]`, author≠judge)이 §12 기준으로 수행한다.
 
 1. 각 섹션 헤딩 **직후 40~60단어 자기완결 즉답**을 둔다(모바일 타깃이면 36~44단어). 서론으로 답을 미루지 않는다.
 2. 페이지 최상단에 **TL;DR/요약 박스** 1개(LLM 우선 픽업).
@@ -47,11 +52,11 @@
 8. 저자 블록(실명·직함·자격·프로필 링크) + 발행일 + **최종 수정일**을 가시 텍스트 + Article JSON-LD 양쪽에.
 9. **1차 경험/실사례/실측 ≥1개**(직접 배치·개통·방문·테스트 — AI가 못 만드는 차별화).
 10. YMYL(비자/취업/통신/금융/법령) 수치·절차는 **공식 1차 소스와 대조**, 과장·미검증 주장 0.
-11. **FAQPage·HowTo JSON-LD를 SEO 리치결과 자산으로 홍보하지 말 것** — Google 리치결과 폐지(§4). 온페이지 Q&A 구조·파싱 목적만.
-12. **`llms.txt`를 Google AEO 필수로 취급 금지** — Google 미사용(공식). 저ROI 실험 항목으로만(§4·§10).
+11. **FAQPage·HowTo JSON-LD를 SEO 리치결과 자산으로 홍보하지 말 것** — Google 리치결과 폐지(정정1·GOOGLE_SERP). 온페이지 Q&A 구조·파싱 목적만.
+12. **`llms.txt`를 Google AEO 필수로 취급 금지** — Google 미사용(공식). 저ROI 실험 항목으로만(정정2).
 13. KR/EN 짝은 **별도 URL + 왕복 hreflang(x-default 포함) + 올바른 ISO 코드**.
 14. 한국어(Naver) 자산 = 경험형·소제목·구조; 영어(Google/GEO) 자산 = 즉답·통계·출처·질문형 헤딩. 엔진별 각도 분리.
-15. robots.txt에서 인용 크롤러(`OAI-SearchBot`·`PerplexityBot`·`Claude-SearchBot`·`Claude-User`·`ChatGPT-User`·`Google-Extended`·`Googlebot`·`Bingbot`) 미차단 확인.
+15. robots.txt에서 **인용 검색봇 미차단** 확인: `OAI-SearchBot`·`PerplexityBot`·`Claude-SearchBot`·`Googlebot`·`Bingbot`·`Yeti`(Naver)·`Daumoa`(Daum). ⚠ `ChatGPT-User`·`Claude-User`는 user-fetch로 robots.txt를 무시하므로(출처: developers.openai.com/api/docs/bots) 검사 대상 아님. `Google-Extended`·`GPTBot`·`ClaudeBot`은 학습·그라운딩봇 — 차단해도 검색/AIO 노출에 무영향이므로 **사업 선택**(차단 가능·게이트 필수 아님). 봇 목록 SSOT = [`ROBOTS_SITEMAP_RSS_TEMPLATES.md`](./ROBOTS_SITEMAP_RSS_TEMPLATES.md) §A.
 16. 발행 후 **GSC 색인요청 + IndexNow(Bing/Naver 계열) + Naver 서치어드바이저 수집요청 + Daum 별도 제출**(webmaster.daum.net 수집요청·register.search.daum.net — IndexNow로 커버 안 됨).
 17. 발행 전 **§12 게이트 통과 + slop-judge(목표 Writing Quality A+, AI-SLOP 신호 0, YMYL 하드페일 0)**.
 
@@ -59,32 +64,36 @@
 
 ## [0] MUST-DO — 모든 신규 페이지 공통 요약 블록
 
-작성 시작 시 아래 6개 블록이 페이지 골격에 **반드시** 존재해야 한다.
+> **§12 마스터 게이트에서 파생된 read-path 요약**이다(반려 권한 없음). page-type별 예외는 §12·'페이지 타입별 변형' 표를 따른다(예: homepage는 0.2 저자 블록·0.5 FAQ 불요).
 
-- **0.1** 상단 **TL;DR 박스** — 30~80단어. 페이지 전체 결론을 자기완결적으로. (LLM·featured snippet·AI Overviews 우선 픽업 단위)
+작성 시작 시 아래 6개 블록이 **article 페이지** 골격에 **반드시** 존재해야 한다(homepage/landing은 page-type 변형 적용).
+
+- **0.1** 상단 **TL;DR 박스** — 40~80단어. 페이지 전체 결론을 자기완결적으로. (LLM·featured snippet·AI Overviews 우선 픽업 단위)
 - **0.2** **저자 블록** — 실명 + 직함 + 자격 1줄 + 프로필/바이오 링크. (E-E-A-T 게이트)
 - **0.3** **발행일 + 최종 수정일** 가시 표기 — "2026-07-01 발행 / 2026-07-01 최신" + `datePublished`/`dateModified` JSON-LD.
 - **0.4** **시점 명시** — "2026년 기준", "As of 2026-07" 등. 요금/법령/통계는 반드시.
-- **0.5** **하단 FAQ 블록** — Q(실제 질문) / A(40~60단어 즉답) 3개 이상. (PAA·AIO 인용 유효. 단 FAQPage 리치결과 기대 X → §4)
+- **0.5** **하단 FAQ 블록** — Q(실제 질문) / A(40~60단어 즉답) 3개 이상. (PAA·AIO 인용 유효. 단 FAQPage 리치결과 기대 X → 정정1)
 - **0.6** **내부링크 3~5개** — 관련 페이지 + 프로그램/제품 허브, 서술형 앵커.
 
-측정 기준(게이트): 위 6개 중 하나라도 없으면 **미완성**으로 판정 → writer 반려.
+측정 기준(참고): 위 6개(page-type 변형 적용 후) 중 하나라도 없으면 **미완성**. 실제 판정·반려는 §12 마스터 게이트 기준으로 독립 체인(Quality Harness + slop-judge)이 수행한다.
 
 ---
 
 ## [1] Meta / Head
 
 ### 1.1 Title
-- **명령**: 50~60자, **≤600px(데스크톱)**, 키워드 front-load(잘려도 핵심 생존).
+- **명령(EN)**: 50~60자, **≤600px(데스크톱)**, 키워드 front-load(잘려도 핵심 생존).
+- **명령(KR/Naver 최우선)**: 한글은 전각이라 50~60자면 ~700px+로 예산 초과 → **~25~33자**로 픽셀·Naver 표시 예산을 맞춘다(글자수 아니라 **픽셀 렌더가 최종 기준**, KR/EN 공통).
 - layout 템플릿이 `| Brand`를 자동 부착하면 per-page title에 브랜드 **중복 금지**(이중 브랜드 방지).
 - ⚠ 51~55자 구간에서 Google Title 재작성률이 높다는 관측 있음(벤더 추정, 공식 강제 아님 — 픽셀 렌더가 실제 기준). 출처: scalenut.com/blogs/meta-title-length-best-practices-2026
 
 ### 1.2 Description
-- **명령**: 데스크톱 155~160자(≤~920px), **모바일 핵심은 첫 110~120자**(≤~680px)에. CTA 포함.
+- **명령(EN)**: 데스크톱 155~160자(≤~920px), **모바일 핵심은 첫 110~120자**(≤~680px)에. CTA 포함.
+- **명령(KR)**: 한글 155자는 데스크톱 ~920px 절단선을 크게 초과 → 데스크톱 ~70~80자, **핵심(로드베어링)은 앞 ~40~45자**에. (픽셀 렌더 기준)
 - AI 인용을 직접 늘리진 않으나 CTR·스니펫 후보에 영향. Google이 60~70% 재작성하므로 "핵심을 앞에".
 
 ### 1.3 Canonical
-- **명령**: `alternates.canonical` = 절대 URL. 각 언어판은 **self-canonical**(hreflang와 canonical 충돌 금지).
+- **명령**: `alternates.canonical` = 절대 URL. **모든 페이지 self-canonical**(단일언어 페이지 포함 — 각 페이지가 자기 URL을 canonical로; hreflang와 canonical 충돌 금지). 게이트는 KR/EN 짝 여부와 무관하게 전 페이지의 canonical 존재·자기참조를 검사(§12 item15).
 
 ### 1.4 OG / Twitter
 - `NEW_PAGE_CHECKLIST.md` A항 준수(중복 셋업 금지). 이미지 절대 URL, `type: article`이면 `publishedTime`·locale(`en_US`/`ko_KR`).
@@ -94,7 +103,7 @@
 
 ### 1.6 JSON-LD (스키마)
 - **살아있는(2026 지원)**: `Article`/`BlogPosting`(+저자·`datePublished`·`dateModified`), `BreadcrumbList`(전 페이지 최소), `Organization`/`WebSite`(루트 1회, `app/layout.tsx`에 이미 있으면 **재주입 금지**), 타입별 `Product`/`JobPosting`/`LocalBusiness`/`Course(list carousel)`/`Event`/`Video`.
-- **죽은/축소(리치결과 폐지)**: `FAQPage`·`HowTo`·`Sitelinks Searchbox`·`Course Info`·`Estimated Salary`·`Learning Video`·`Special Announcement`·`Vehicle Listing`·`ClaimReview`·`Practice Problem`. → 신규 생성 금지(상세 §4).
+- **죽은/축소(리치결과 폐지)**: `FAQPage`·`HowTo`·`Sitelinks Searchbox`·`Course Info`·`Estimated Salary`·`Learning Video`·`Special Announcement`·`Vehicle Listing`·`ClaimReview`·`Practice Problem`. → 신규 생성 금지(상세 정정1·GOOGLE_SERP).
 - **⚠ Book Actions는 "폐지 철회"** — 2025-11 Google이 폐지 배너를 제거, 여전히 지원. "사용 금지" 아님. (출처: etavrian.com/news/google-deprecates-practice-problem-structured-data)
 - 권장 포맷 = **JSON-LD**(Google 공식). schema.org 800+ 타입 중 Google 리치결과 지원은 부분집합.
 - → **복붙 템플릿·스키마 생사표**: [`SCHEMA_JSONLD_CATALOG.md`](./SCHEMA_JSONLD_CATALOG.md). **리치결과 생사·AIO 발췌 조건**: [`GOOGLE_SERP_STRUCTURED_AI_2026.md`](./GOOGLE_SERP_STRUCTURED_AI_2026.md). (여기선 넣을지/뺄지 규칙만, 코드는 카탈로그에서.)
@@ -156,6 +165,7 @@ robots.txt 허용(차단하면 인용 자체 불가). ⚠ **버전 문자열은 
 - Google: `Google-Extended`(⚠ **Gemini 학습·그라운딩만 제어 — AI Overviews는 통제하지 못한다**. AIO는 Googlebot 인덱스 사용), `Googlebot`.
 - Bing: `Bingbot`(Copilot 색인 경유). ⚠ Daum은 Bing 백엔드가 아니라 **자체 Daumoa 엔진**(구 Bing 제휴는 종료로 알려짐 — 불확실) → `Bingbot` 허용이 Daum 색인을 커버하지 않음(§6.2·§9.4).
 - **KORVIA는 인용 극대화 목적** → 위 검색·인용 봇 전면 허용. 학습봇(`GPTBot`/`ClaudeBot`/`CCBot`)은 정책 판단(검색 인용과 무관 — 인용 목적이면 굳이 차단 불필요).
+- ⚠ **`Bytespider`(ByteDance)는 robots.txt를 무시하는 것으로 관측** → robots.txt `Disallow`만으로는 못 막는다. 차단이 필요하면 **CF WAF 등 서버단**에서. (봇 목록·차단 룰 SSOT = [`ROBOTS_SITEMAP_RSS_TEMPLATES.md`](./ROBOTS_SITEMAP_RSS_TEMPLATES.md) §A)
 - ⚠ **AIO 인용을 원하면 `nosnippet`/`data-nosnippet`/`max-snippet:0`을 절대 걸지 말 것** — 스니펫 포기 = AIO 탈락.
 - robots.txt 패치: `korvia-seo-skill/.claude/skills/seo-harness-team/resources/robots-txt-ai-patch.txt`. → **스택별 robots 템플릿·AI 봇 allowlist 코드**: [`ROBOTS_SITEMAP_RSS_TEMPLATES.md`](./ROBOTS_SITEMAP_RSS_TEMPLATES.md).
 - ⚠ "OpenAI 봇이 AI 트래픽 ~69%"는 **측정 의존·상충**(Cloudflare 크롤 점유율로는 GPTBot ~11.5%). 절대 단정 금지, "출처·측정방식에 따라 상이"로. (출처: technologychecker.io/blog/chatgpt-statistics)
@@ -176,6 +186,7 @@ robots.txt 허용(차단하면 인용 자체 불가). ⚠ **버전 문자열은 
 - **명령**: 모든 변동 사실(비자 요건·수수료·기한·요금·약관)은 **"As of YYYY-MM" + 공식 1차 소스 링크**(HiKorea·법무부 출입국·EPIK/NIIED·과기정통부·통신사 공식).
 - Organization + 일관 NAP(Name/Address/Phone). KORVIA 권위 근거(2013 서울시장 표창, 2018/2021 고용노동부 우수기관 인증) 일관 명시.
 - **부정확·과장 = 하드페일**(slop-judge YMYL 게이트 연계, §12).
+- **[하드룰] 생성형 AI 응답 조작·대량 AI 양산 금지**: Google 검색 스팸정책(2026-05-15)은 "구글 검색의 생성형 AI 응답을 조작하려는 시도"와 "가치 없는 대량 AI 생성 페이지(scaled content abuse)"를 스팸으로 명시하며, 위반 사이트는 **순위 강등 또는 색인 제외(de-index)** 대상이다. AIO/AI 인용을 노린 프롬프트 인젝션·숨김 텍스트·대량 스핀 콘텐츠 절대 금지. (출처: developers.google.com/search/docs/essentials/spam-policies, 2026-05-15)
 
 ---
 
@@ -194,7 +205,7 @@ robots.txt 허용(차단하면 인용 자체 불가). ⚠ **버전 문자열은 
 ### 5.3 콘텐츠 형식 (원본성/이미지/구조)
 - **명령**: 정보성 한국어 본문은 소제목 여러 개로 충분한 깊이. ⚠ "평균 2,000~3,000자·체류 2.5~3분+"는 추정치 — **글자수 채우기가 아니라 세부의도 충족+구조**로 정당화.
 - **직접 촬영 원본 이미지·스크린샷·표** 필수(스톡/AI 이미지 단독 남발 감점 — D.I.A 원본성). 파일명 서술형 + alt + 캡션.
-- 소제목을 **실제 검색 질의문** 형태로("E-2 비자에 재직증명서가 필요한가요?"). 자동완성·연관검색어를 소제목으로 흡수.
+- 소제목을 **실제 검색 질의문** 형태로("E-2 비자에 재직증명서가 필요한가요?"). ⚠ 네이버 **'연관검색어' 서비스는 2026-04-30 종료**(약 20년 만; 전자신문 등 다수 보도) → 연관검색어 블록 타깃팅은 무효. **자동완성(입력 중 드롭다운)·'관련 질문'·AI 브리핑용 실제 질의문을 소제목으로 흡수**(대체 표면). (출처: etnews.com/20260407000435)
 
 ### 5.4 외부 홈페이지의 한계
 - KORVIA 4사이트는 전부 **외부 홈페이지** → 네이버 실질 노출 영역 = **①웹사이트/웹문서 ②AI 브리핑 출처**뿐. 블로그·카페·인플루언서·지식iN 영역은 **네이버 자산(공식 블로그/포스트/플레이스)을 위성으로** 별도 운영해야 진입.
@@ -249,11 +260,11 @@ robots.txt 허용(차단하면 인용 자체 불가). ⚠ **버전 문자열은 
 > → **한 번 발행 → 전 콘솔 엔드투엔드 런북**: [`MULTI_ENGINE_MASTER_2026.md`](./MULTI_ENGINE_MASTER_2026.md) §5. 아래는 게이트용 최소 요약이며 콘솔별 절차·API·한도는 각 참조 문서로.
 
 - **9.1 Google**: Search Console에 sitemap 재제출 + 신규/변경 URL 'URL 검사 → 색인 요청'. (⚠ Google은 IndexNow **미지원** — sitemap+GSC 유지.) → 상세 [`GOOGLE_SEARCH_CONSOLE_INDEXING.md`](./GOOGLE_SEARCH_CONSOLE_INDEXING.md).
-- **9.2 Bing + IndexNow**: Bing Webmaster 등록 + **IndexNow 핑**. IndexNow 지원 = **Bing·ChatGPT(Bing 경유)·Yandex·Naver·Seznam·Yep**. Next.js는 배포 훅에서 IndexNow API POST, WordPress(Kimchi)는 플러그인. (출처: indexnow.org, en.wikipedia.org/wiki/IndexNow) → 상세 [`BING_YAHOO_INDEXNOW.md`](./BING_YAHOO_INDEXNOW.md), 코드 템플릿 [`ROBOTS_SITEMAP_RSS_TEMPLATES.md`](./ROBOTS_SITEMAP_RSS_TEMPLATES.md) §D.
+- **9.2 Bing + IndexNow**: Bing Webmaster 등록 + **IndexNow 핑**. IndexNow 참여 엔진(2026-07-02 확인) = **Bing·Naver·Yandex·Seznam.cz·Yep·Amazon**(ChatGPT는 Bing 인덱스 경유 간접). ⚠ **Google·Daum은 미참여.** 한 참여 엔진의 `/indexnow` 엔드포인트로 제출하면 나머지 참여 엔진에 자동 전파. Next.js는 배포 훅에서 IndexNow API POST, WordPress(Kimchi)는 플러그인. (출처: indexnow.org/faq) → **참여 목록 SSOT = [`BING_YAHOO_INDEXNOW.md`](./BING_YAHOO_INDEXNOW.md)**, 코드 템플릿 [`ROBOTS_SITEMAP_RSS_TEMPLATES.md`](./ROBOTS_SITEMAP_RSS_TEMPLATES.md) §D.
   - ChatGPT가 Bing 인덱스를 쓰므로 **IndexNow 제출 = ChatGPT 인용 가속(간접)**.
 - **9.3 Naver**: 서치어드바이저 `요청 > 웹페이지 수집` 직접 제출(+ IndexNow로도 전파). → 상세 [`NAVER_SEARCHADVISOR_PLAYBOOK.md`](./NAVER_SEARCHADVISOR_PLAYBOOK.md).
 - **9.4 Daum**(별도 필수): Daum=**자체 Daumoa 엔진 + IndexNow 미참여** → 9.2(Bing/IndexNow)로 **커버 안 됨**. **webmaster.daum.net에서 수집요청(사이트/URL) + register.search.daum.net 검색등록**을 **반드시 별도 수행**. → 상세 [`DAUM_KAKAO_SEARCH.md`](./DAUM_KAKAO_SEARCH.md).
-- **9.5 검증**: `site:도메인`(색인 확인), `curl -sL <url> | grep -oE '<link rel="canonical"[^>]*>|"@type":"[A-Za-z]+"'`(canonical+schema), Rich Results Test(단 FAQ 필터는 제거됨 §4).
+- **9.5 검증**: `site:도메인`(색인 확인), `curl -sL <url> | grep -oE '<link rel="canonical"[^>]*>|"@type":"[A-Za-z]+"'`(canonical+schema), Rich Results Test(단 FAQ 필터는 제거됨 — 정정1).
 
 ---
 
@@ -278,35 +289,40 @@ robots.txt 허용(차단하면 인용 자체 불가). ⚠ **버전 문자열은 
 
 ---
 
-## 발행 전 게이트 (마스터 번호 체크리스트) — slop-judge 연계
+## §12 발행 전 게이트 (마스터 번호 체크리스트 · 규칙 SSOT) — Quality Harness `[AUTO]` + slop-judge `[JUDGE]` 연계
 
-작성 완료 후 발행 전, **순서대로** 통과. 하나라도 실패 시 writer 패스로 반려.
+> 이 체크리스트가 **규칙 SSOT**다(§0·§[0]은 여기서 파생된 read-path 요약). 각 항목에 **판정 방식**과 **적용 page-type**을 태그한다.
+> - **판정**: `[AUTO]` = 기계 검사(H1 수·단어수·canonical·hreflang ISO 코드·스키마 존재 등 → Quality Harness가 실행) · `[JUDGE]` = 주관 판정(경험·원본성·YMYL 정확성 → item23 slop-judge로 위임). "측정가능" 단언은 `[AUTO]` 항목에만 유효.
+> - **page-type**: `A`=article · `H`=homepage · `L`=landing. 태그에 없는 page-type에서는 해당 항목을 **skip**('페이지 타입별 변형' 표 준수 — 정당한 homepage를 오반려하거나 억지 저자블록·통계 스터핑·가짜 사례를 넣게 만들지 말 것).
+> - **반려/승인 권한**: 이 문서(작성자 자기점검 근거)가 아니라 **독립 체인**(Quality Harness `[AUTO]` + slop-judge `[JUDGE]`, author≠judge)에 있다.
 
-1. **[H1]** 페이지당 H1 1개, 핵심 엔티티+키워드 front-load.
-2. **[질문형 헤딩]** 주요 H2/H3가 실제 사용자 쿼리 형태.
-3. **[즉답]** 각 섹션 헤딩 직후 40~60단어(모바일 36~44) 자기완결 답. TL;DR 박스 상단 존재.
-4. **[밀도]** 즉답 문단당 핵심 사실 5~7개.
-5. **[통계]** 주장 문장에 검증가능 숫자(연도·%·금액·건수) 최소 3곳.
-6. **[출처]** 각 핵심 사실에 1차 출처. YMYL은 전 사실 출처 + "As of YYYY-MM".
-7. **[인용문]** 전문가/공식 직접 인용문 ≥1.
-8. **[표/리스트]** 비교·자격·요금은 표 또는 번호 리스트로 구조화.
-9. **[FAQ]** 하단 Q&A 블록(Q=실제 질문, A=40~60단어 즉답). **리치결과 기대 X**(§4).
-10. **[엔티티 명시]** 대명사·모호어 대신 고유명 반복.
-11. **[E-E-A-T]** 저자 블록(이름·직함·자격·링크) + 발행일 + **최종 수정일** 가시.
-12. **[경험]** 1차 경험/사례/실측 ≥1(AI가 못 만드는 신호).
-13. **[YMYL 정확성]** 비자/통신/금융/취업 수치·절차가 공식 소스와 일치, 과장·미검증 주장 0.
-14. **[내부링크]** 관련 3~5개 + 허브, 서술형 앵커.
-15. **[메타]** Title 50~60자(≤600px, front-load) / Description 155~160자(모바일 첫 110자) / 이미지 alt.
-16. **[스키마]** Article(+저자·수정일)·BreadcrumbList·타입별. **FAQPage/HowTo는 리치결과 기대 없이만.** Book Actions는 폐지 아님(§4).
-17. **[이중언어]** KR/EN 짝이면 별도 URL + 왕복 hreflang(x-default) + 올바른 ISO 코드(GB≠UK).
-18. **[Naver]**(한국어 자산) 소제목 다수·경험형·직접촬영 이미지. 정량치는 추정으로만.
-19. **[분량/원본성]** 총 1,500자+ 깊이, non-commodity(1차 관점), 상품화된 일반론 회피.
-20. **[크롤러]** robots.txt에서 `OAI-SearchBot`/`PerplexityBot`/`Claude-SearchBot`/`Claude-User`/`Google-Extended`/`Googlebot`/`Bingbot` 미차단 + `nosnippet` 미설정 확인.
-21. **[최신성]** "2026년 기준" 시점 명시, 요금/법령/통계 최신 반영, 수정일 갱신.
-22. **[제출]** 발행 후 GSC 색인요청 + IndexNow(Bing/Naver) + Naver 수집요청 + **Daum 별도 제출**(webmaster.daum.net·register.search.daum.net — Daumoa 자체엔진·IndexNow 미참여이므로 필수)(§9).
-23. **[slop-judge]** 발행 전 `slop-judge`로 **Writing Quality 등급(목표 A+) + AI-SLOP 신호 0 + YMYL 하드페일 0** 확인. 실패 시 fix-list를 writer 패스(kimchi-blog / korvia-content-pm / seo-harness-team)로 반려 후 재게이트.
+작성 완료 후 발행 전, page-type에 해당하는 항목을 순서대로 점검.
 
-> **slop-judge 연계 원칙**: 이 게이트(1~22)는 writer가 **자체 통과**시키고, **23은 독립 심사**(작성자≠심사자). slop-judge는 read-only 심판 — 재작성하지 않고 P0/P1/P2 fix-list만 반환. YMYL 하드페일(출처 없는 수치·ghost citation·과장·마케팅 위장)이 하나라도 있으면 발행 차단.
+1. **[H1]** 페이지당 H1 1개, 핵심 엔티티+키워드 front-load. `[AUTO]` {A·H·L}
+2. **[질문형 헤딩]** 주요 H2/H3가 실제 사용자 쿼리 형태. `[JUDGE]` {A}(H=주요 서비스 Q 최소·L=FAQ 집중)
+3. **[즉답/TL;DR]** 상단 TL;DR 박스 존재(40~80단어) + 각 섹션 헤딩 직후 40~60단어(모바일 36~44) 자기완결 답. `[AUTO]`(TL;DR·단어수) + `[JUDGE]`(자기완결) {A(섹션 즉답)·H·L(TL;DR/히어로 즉답)}
+4. **[밀도]** 핵심 단락의 사실을 **표 행 또는 볼드 단독 클레임 ≥3개**로 노출(‘문단당 5~7개’는 프록시일 뿐 — 40~60단어 즉답과 물리 충돌하므로 카운트 강제 금지). `[JUDGE]` {A}
+5. **[통계]** 주장 문장에 검증가능 숫자(연도·%·금액·건수) 최소 3곳. `[JUDGE]` {A}(H=권위근거 수치·L=요금/자격/결과 데이터로 치환)
+6. **[출처]** 각 핵심 사실에 1차 출처. YMYL은 전 사실 출처 + "As of YYYY-MM". `[JUDGE]` {A·L}(YMYL 시 H 포함)
+7. **[인용문]** 전문가/공식 직접 인용문 ≥1. `[JUDGE]` {A}
+8. **[표/리스트]** 비교·자격·요금은 표 또는 번호 리스트로 구조화. `[JUDGE]` {A·L}
+9. **[FAQ]** 하단 Q&A 블록(Q=실제 질문, A=40~60단어 즉답). **리치결과 기대 X**(정정1). `[JUDGE]` {A(하단 필수)·L(필수)}(H=선택)
+10. **[엔티티 명시]** 대명사·모호어 대신 고유명 반복. `[JUDGE]` {A·H·L}
+11. **[E-E-A-T]** 저자 블록(이름·직함·자격·링크) + 발행일 + **최종 수정일** 가시. `[AUTO]`(발행/수정일·저자블록 존재) + `[JUDGE]`(자격 신뢰) {A}(H/L=저자블록 불요 → Organization/WebSite 엔티티로 대체)
+12. **[경험]** 1차 경험/사례/실측 ≥1(AI가 못 만드는 신호). `[JUDGE]` {A}(H=실적/포트폴리오·L=실제 배치/개통/수업 결과)
+13. **[YMYL 정확성]** 비자/통신/금융/취업 수치·절차가 공식 소스와 일치, 과장·미검증 주장 0. **생성형 AI 응답 조작·대량 AI 양산 = 스팸(§4)**. `[JUDGE]` {A·H·L, YMYL 해당 시}
+14. **[내부링크]** 관련 3~5개 + 허브, 서술형 앵커. `[AUTO]`(개수·앵커 텍스트) {A·H·L}
+15. **[메타]** Title(EN 50~60자/≤600px·KR ~25~33자, front-load) / Description(EN 155~160자·KR ~70~80자, 로드베어링 앞부분) / 이미지 alt / **self-canonical 절대 URL 존재·자기참조(전 페이지 — 단일언어 포함)**. `[AUTO]` {A·H·L}
+16. **[스키마]** Article(+저자·수정일)·BreadcrumbList·타입별. **FAQPage/HowTo는 리치결과 기대 없이만.** Book Actions는 폐지 아님(§1.6). `[AUTO]`(존재·@type) {A·H·L}
+17. **[이중언어]** KR/EN 짝이면 별도 URL + 왕복 hreflang(x-default) + 올바른 ISO 코드(GB≠UK). `[AUTO]` {A·H·L, 짝일 때}
+18. **[Naver]**(한국어 자산) 소제목 다수·경험형·직접촬영 이미지. 정량치는 추정으로만. **KR 자산은 UI/메뉴/푸터/이미지 내 텍스트까지 영어 혼입 0**(Naver는 hreflang 미준수 → 언어 혼합 시 최적화 붕괴, §6.2). `[JUDGE]` {A·H·L, KR 자산}
+19. **[분량/원본성]** 총 1,500자+ 깊이, non-commodity(1차 관점), 상품화된 일반론 회피. `[JUDGE]` {A}
+20. **[크롤러]** robots.txt에서 **인용 검색봇** `OAI-SearchBot`/`PerplexityBot`/`Claude-SearchBot`/`Googlebot`/`Bingbot`/`Yeti`/`Daumoa` 미차단 + `nosnippet` 미설정 확인. ⚠ `ChatGPT-User`·`Claude-User`(user-fetch, robots 무시)와 `Google-Extended`·`GPTBot`·`ClaudeBot`(학습·그라운딩봇 — 차단해도 검색/AIO 노출 무영향)은 **필수 아님·사업 선택**. `Bytespider`는 robots 무시 → 차단은 WAF에서(§3.6). `[AUTO]` {A·H·L}
+21. **[최신성]** "2026년 기준" 시점 명시, 요금/법령/통계 최신 반영, 수정일 갱신. `[AUTO]`(시점 문구·dateModified) + `[JUDGE]`(실제 최신성) {A·H·L}
+22. **[제출 준비]** 발행 후 제출(GSC 색인요청·IndexNow[Bing/Naver 계열]·Naver 수집요청·**Daum 별도 제출** webmaster.daum.net·register.search.daum.net)은 **발행 이후 런북** 소관이라 pre-publish 게이트에서 pass/fail 판정 불가 → 게이트에서는 **제출 자동화/배포 훅이 구성돼 있음**만 확인. 실제 절차: [`MULTI_ENGINE_MASTER_2026.md`](./MULTI_ENGINE_MASTER_2026.md) §5(=§9 요약). `[AUTO]`(훅/자동화 구성 확인) {A·H·L}
+23. **[slop-judge]** 발행 전 `slop-judge`로 **Writing Quality 등급(목표 A+) + AI-SLOP 신호 0 + YMYL 하드페일 0** 확인. 실패 시 fix-list를 writer 패스(kimchi-blog / korvia-content-pm / seo-harness-team)로 반려 후 재게이트. `[JUDGE]`(독립 심사) {A·H·L}
+
+> **slop-judge 연계 원칙**: item1~22는 writer가 **자체 점검**하고, **item23은 독립 심사**(작성자≠심사자). 실제 반려/승인은 **독립 체인**(Quality Harness `[AUTO]` 실행 + slop-judge `[JUDGE]`)이 수행하며 이 문서는 판정 근거일 뿐이다. slop-judge는 read-only 심판 — 재작성하지 않고 P0/P1/P2 fix-list만 반환. YMYL 하드페일(출처 없는 수치·ghost citation·과장·마케팅 위장·AI 응답 조작)이 하나라도 있으면 발행 차단.
 
 ---
 

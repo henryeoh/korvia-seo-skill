@@ -82,5 +82,5 @@ originSessionId: 10654995-dff2-4b5c-a086-7c644c9a3bb1
 4. 최종 검증 (사람): `git status` + `git diff --cached` 확인 후 논리적 커밋 분리
 5. 배포 후 5분 뒤 Lighthouse 재측정
 
-상세: `feedback_3layer_agent_pipeline.md`
-전체 가이드: `/Users/henryoh/Library/CloudStorage/ZohoWorkDriveTrueSync-KORVIA/KORVIA IRS/KORVIA_WEB_PLAYBOOK.md`
+상세: [`./3LAYER_AGENT_PIPELINE.md`](./3LAYER_AGENT_PIPELINE.md) (패턴 SSOT)
+전체 가이드: [`./WEB_PLAYBOOK.md`](./WEB_PLAYBOOK.md) — 스킬 이식성을 위해 상대경로만 사용(절대경로 금지)

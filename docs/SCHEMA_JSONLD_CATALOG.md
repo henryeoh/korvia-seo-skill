@@ -1,3 +1,8 @@
+---
+last_verified: 2026-07
+reverify_by: 2026-Q4
+---
+
 # JSON-LD 구조화데이터 카탈로그 (복붙 템플릿)
 
 > Generated 2026-07-01 · Owner: Henry Oh (KORVIA) · ⚠ 콘솔/API 변경은 사용 전 재확인
@@ -21,7 +26,7 @@
 3. **모든 색인 페이지에 `BreadcrumbList`**(§6.4).
 4. **블로그/가이드 = `Article`/`BlogPosting`** + 실명 `author`(Person) + `author.url`/`sameAs` + `datePublished`/`dateModified`(ISO 8601 + 타임존). 저자 여러 명은 개별 필드로 분리(§6.5, §6.13).
 5. **Korvia 채용 상세 = `JobPosting`** 필수 5필드 + `validThrough` + 만료 시 제거. **리스트/검색 페이지엔 붙이지 마라**(§6.7).
-6. **Kimchi eSIM 상품 = `Product` + `offers`**(`price`·`priceCurrency`·`availability`·`priceValidUntil`). **자사 상품 자기 별점(self-serving review) 금지**(§6.10~6.11).
+6. **Kimchi eSIM 상품 = `Product` + `offers`**(`price`·`priceCurrency`·`availability`·`priceValidUntil`). **자사가 파는 Product에는 진짜 고객이 남긴 `review`/`aggregateRating` 별점 마크업이 허용된다**(Google 공식 지원 → Kimchi eSIM 정품 고객 리뷰 수집 시 상품 별점 리치 획득 권장). self-serving 별점 금지는 **Organization/LocalBusiness에만** 적용(§6.10~6.11).
 7. **ACT 센터 = `LocalBusiness`** + `Course`는 캐러셀(`ItemList`)로만 리치 기대(§6.2, §6.8).
 8. **포맷은 항상 JSON-LD**(Google 권장). `<script type="application/ld+json">`. Microdata/RDFa 신규 도입 금지.
 9. **엔티티 값은 페이지 가시 콘텐츠와 일치.** 화면에 없는 정보를 스키마에만 넣지 마라(정책 위반).
@@ -39,7 +44,7 @@
 | Article / BlogPosting / NewsArticle | ~~HowTo~~ (2023~ 폐지) |
 | JobPosting (만료관리 필수) | ~~WebSite > SearchAction (Sitelinks Searchbox)~~ (2024-11-21) |
 | Product + Offer / Merchant listing | ~~Course Info~~ (2025-09-09) — Course *list* 캐러셀만 잔존 |
-| Review snippet / AggregateRating (비자사) | ~~Estimated Salary / Learning Video / Special Announcement / Vehicle Listing / ClaimReview~~ (2025-09-09) |
+| Review snippet / AggregateRating (Product=실고객 별점 허용 / Org·Local=자사 통제 리뷰 부적격) | ~~Estimated Salary / Learning Video / Special Announcement / Vehicle Listing / ClaimReview~~ (2025-09-09) |
 | Event, VideoObject | ~~Practice Problem / Nutrition facts / Nearby offers / Vacation rental~~ (2026-01 배치) |
 | Course *list* 캐러셀(ItemList), Person(author), WebSite(name/alternateName) | (Dataset = Google **Dataset Search** 전용, 일반 Search 리치 아님 → 4개 사이트 비적용) |
 
@@ -63,6 +68,8 @@
 | Organization / LocalBusiness / BreadcrumbList / Article / JobPosting / Product / Review / Event / Video / Course *list* / Profile·Q&A·Discussion | ✅ 유효 | 2026-07 Search Gallery 확인 | [Search Gallery](https://developers.google.com/search/docs/appearance/structured-data/search-gallery) |
 
 > Google 기조: **"검색결과 페이지 단순화"**([2025-06 블로그](https://developers.google.com/search/blog/2025/06/simplifying-search-results)) — 저활용·저가치 리치결과 대량 정리 중. **AI Overviews/AI Mode에 뜨려고 특수 스키마·llms.txt를 만들 필요 없음**(Google 공식). 구조화데이터는 리치결과 자격 유지 목적으로만 계속 권장.
+>
+> **[검증 2026-07]** 폐지 5종(**Course Info · Estimated Salary · Learning Video · Special Announcement · Vehicle Listing**)의 2025-09 폐지와 **Practice Problem**의 2026-01 폐지는 Google Search Central 'What's new' changelog로 재확인됨(출처: [developers.google.com/search/updates](https://developers.google.com/search/updates)). ⚠ **Estimated Salary 경고**: 이 리치결과 유형은 폐지됐으므로 신규 생성하지 마라 — Korvia 채용 페이지의 급여 정보는 JobPosting의 `baseSalary`(실제 급여)로만 표기하고 별도 Estimated Salary 스키마와 혼동·중복 삽입하지 않는다.
 
 ---
 
@@ -80,7 +87,7 @@
 | Course | ⚠ Info 폐지 / list 캐러셀만 ✅ | ⚠ 미문서화 | 캐러셀로만(§6.8) |
 | Event | ✅ 이벤트 리치 | ⚠ 미문서화 | 넣음(§6.9) |
 | Product + Offer | ✅ 상품 스니펫·머천트 | ⚠ 미문서화 (Naver는 쇼핑 별도 생태계) | 넣음(§6.10) |
-| Review / AggregateRating | ✅ 별점(비자사 한정) | ⚠ 미문서화 | 넣되 self-serving 금지(§6.11) |
+| Review / AggregateRating | ✅ 별점 — Product는 실고객 리뷰면 자사도 허용 / Org·LocalBusiness 자사 통제 리뷰만 부적격 | ⚠ 미문서화 | Product 실고객 별점 권장·Org/Local self-serving 금지(§6.11) |
 | VideoObject | ✅ 영상 리치·키모먼트 | ⚠ 미문서화 (Naver TV 별도) | 넣음(§6.12) |
 | Person (author) | ✅ 저자 신뢰·프로필 페이지 | ⚠ 미문서화 | 넣음(§6.13) |
 
@@ -101,7 +108,9 @@
 **발행 전 게이트(복붙):**
 ```bash
 # 배포된 페이지에서 canonical + 주입된 @type 목록 확인
-curl -sL https://<site>/<page> | grep -oE '<link rel="canonical"[^>]*>|"@type":"[A-Za-z]+"'
+# (공백/pretty-print "@type": "Article" 와 듀얼타입 배열 ["Organization","ProfessionalService"] 모두 포착)
+curl -sL https://<site>/<page> | grep -oE '<link rel="canonical"[^>]*>|"@type"[[:space:]]*:[[:space:]]*(\[[^]]*\]|"[^"]+")'
+# 더 견고: <script type="application/ld+json"> 블록을 jq/JSON-LD 추출기로 파싱해 @type 목록을 뽑는 방식 권장.
 ```
 
 ---
@@ -324,6 +333,7 @@ curl -sL https://<site>/<page> | grep -oE '<link rel="canonical"[^>]*>|"@type":"
 
 - **⚠ 상태**: Google FAQ 리치결과 **2026-05-07 검색 미표시**, 문서 제거 2026-06-15, API 지원 2026-08 종료. **새 FAQPage JSON-LD를 생성하지 마라.** 문법 자체는 유효하고 Google이 파싱은 하나 **리치결과 자산으로 홍보 금지**.
 - **대신**: 본문에 **Q&A 텍스트 구조**를 유지하라 — PAA(People Also Ask)·AI Overviews·피처드 스니펫 인용에 **여전히 유효**. 질문형 소제목 + 40~60단어 즉답.
+- **⚠ 파싱 뉘앙스**: "Google이 FAQPage를 파싱한다"는 것은 **문법을 읽어 콘텐츠를 이해**한다는 의미일 뿐, FAQPage 스키마가 있어야 검색 이해나 AI Overviews/AI Mode 인용이 잘 된다는 뜻은 **아니다**. Google 공식(AI 최적화 가이드, 갱신 2026-06-29)은 **생성형 AI 노출에 특수 마크업·기계판독 파일·콘텐츠 청킹이 불필요**하고 표준 SEO·본문 텍스트가 토대라고 명시한다 → 인용/이해 목적으로 FAQPage를 새로 만들 이유도 없다(본문 Q&A 텍스트로 충분). 출처: [ai-optimization-guide](https://developers.google.com/search/docs/fundamentals/ai-optimization-guide).
 - **엔진**: Google ⚠(리치 없음, 파싱만). Naver ⚠.
 - **정정 노트**: [`WEB_PLAYBOOK.md`](./WEB_PLAYBOOK.md) §2.2/§2.3과 [`NEW_PAGE_CHECKLIST.md`](./NEW_PAGE_CHECKLIST.md) §B-8의 "FAQPage 주입" 항목은 이 2026 폐지 이전 작성분 → **"리치결과 폐지, 본문 Q&A만"으로 하향** 적용.
 
@@ -340,7 +350,8 @@ curl -sL https://<site>/<page> | grep -oE '<link rel="canonical"[^>]*>|"@type":"
 
 - **언제**: **개별 채용 상세 페이지에만.** ⚠ 리스트/검색결과 페이지엔 붙이지 마라(가이드라인 위반).
 - **필수 5**: `datePosted`(ISO 8601), `description`(HTML 전체 상세), `hiringOrganization`(회사명, 지점 아님), `jobLocation`(**반드시 `addressCountry` 포함**), `title`(코드·급여·주소 제외한 순수 직무명).
-- **권장**: `baseSalary`(`currency` + `value.unitText`=HOUR/DAY/WEEK/MONTH/YEAR), `employmentType`(FULL_TIME 등), `validThrough`(마감일 ISO 8601), `identifier`, `applicantLocationRequirements`, `jobLocationType`="TELECOMMUTE"(100% 원격), `directApply`(bool).
+- **권장**: `baseSalary`(`currency` + `value.unitText`=HOUR/DAY/WEEK/MONTH/YEAR), `employmentType`(FULL_TIME 등), `validThrough`(마감일 ISO 8601), `identifier`, `directApply`(bool).
+- **⚠ 원격 전용 필드**: `jobLocationType`="TELECOMMUTE" + `applicantLocationRequirements`(원격 근무자가 **거주 가능한** 국가/지역, 유효 국가명 최소 1개)는 **100% 재택/원격 채용에만** 세트로 사용한다. 물리적 근무지(서울 EPIK 등) on-site 채용엔 붙이지 마라 — 근무지는 `jobLocation`만으로 표기. (TELECOMMUTE만 넣고 `applicantLocationRequirements`를 빠뜨리면 Search Console 오류.) 출처: [Job posting docs](https://developers.google.com/search/docs/appearance/structured-data/job-posting).
 - **⚠ 만료 관리(강제)**: 만료 채용은 반드시 내려야 함 — `validThrough` 과거화 / 페이지 404·410 / 마크업 제거 중 하나. 안 지키면 수동 조치(manual action) 경고.
 - **엔진**: Google ✅(Google Jobs). Naver ⚠.
 - **검증**: RRT(Job posting) + Schema Validator.
@@ -376,12 +387,11 @@ curl -sL https://<site>/<page> | grep -oE '<link rel="canonical"[^>]*>|"@type":"
     "currency": "KRW",
     "value": { "@type": "QuantitativeValue", "minValue": 2100000, "maxValue": 2700000, "unitText": "MONTH" }
   },
-  "applicantLocationRequirements": { "@type": "Country", "name": "Worldwide" },
   "directApply": true
 }
 </script>
 ```
-> Korvia 전용. EPIK/원어민 채용 상세에만. 배치 완료·마감 시 `validThrough` 과거화 또는 페이지 410. `applicantLocationRequirements`로 해외 지원자 허용을 명시(외국인 대상).
+> Korvia 전용. EPIK/원어민 채용 상세에만. 배치 완료·마감 시 `validThrough` 과거화 또는 페이지 410. ⚠ **해외/외국인 지원 환영은 `description` 본문·자격요건 문구로 표기하라** — `applicantLocationRequirements`는 '외국인 지원 허용'이 아니라 '원격 근무자 거주 허용 지역'을 뜻하는 원격 전용 필드이므로 on-site EPIK 채용엔 쓰지 않는다(`name:"Worldwide"`도 유효한 국가/지역명 아님).
 
 ---
 
@@ -473,7 +483,7 @@ curl -sL https://<site>/<page> | grep -oE '<link rel="canonical"[^>]*>|"@type":"
 
 - **언제**: 판매 상품 페이지(Kimchi eSIM/요금제).
 - **필수**: `name`, `offers`(`price`, `priceCurrency`, `availability`). **권장**: `image`, `description`, `brand`, `sku`/`gtin`, `offers.priceValidUntil`, `offers.url`.
-- **⚠ 리뷰 정책**: **자사가 파는 상품에 자기 별점(self-serving `review`/`aggregateRating`)을 붙이면 리치결과 부적격**(정책 제한). 제3자·독립 리뷰만 유효(§6.11).
+- **✅ 리뷰 정책 (2026-07 공식 재확인)**: 자사가 **파는 Product**에 **진짜 고객이 남긴** `review`/`aggregateRating`을 마크업하는 것은 Google이 **명시적으로 허용**한다(별점 리치결과 유효). self-serving 별점 금지는 **Organization/LocalBusiness 타입에만** 적용(회사·브랜드 자체에 대한 자사 통제 리뷰)이며 Product엔 적용되지 않는다. Product에서 실제 금지되는 것은 **조작·자작·미검증(가짜) 리뷰**뿐. 출처: [Review snippet docs](https://developers.google.com/search/docs/appearance/structured-data/review-snippet), [2019-09 발표](https://developers.google.com/search/blog/2019/09/making-review-rich-results-more-helpful) (§6.11).
 - **Merchant listing(판매) vs Product snippet(정보)**: 판매 페이지엔 `Offer`, 비교/리뷰 페이지엔 review 부착.
 - **엔진**: Google ✅. Naver ⚠(Naver 쇼핑은 별도 생태계).
 - **검증**: RRT(Product/Merchant listing) + Schema Validator. ⚠ Product의 self-serving 리뷰 정책 세부는 [Product docs](https://developers.google.com/search/docs/appearance/structured-data/product)로 재확인.
@@ -500,13 +510,13 @@ curl -sL https://<site>/<page> | grep -oE '<link rel="canonical"[^>]*>|"@type":"
 }
 </script>
 ```
-> Kimchi 전용. **요금·재고 정보를 항상 최신으로 유지**(YMYL 신뢰 신호). `priceValidUntil` 지나면 갱신. 자기 별점 금지 → 후기는 제3자 리뷰로만.
+> Kimchi 전용. **요금·재고 정보를 항상 최신으로 유지**(YMYL 신뢰 신호). `priceValidUntil` 지나면 갱신. **정품 고객 리뷰를 수집하면 자사 eSIM 상품에 `aggregateRating` 별점 리치를 붙일 수 있다**(Google 지원) — 단 조작·자작 리뷰 금지, 실제·검증 가능한 고객 후기만.
 
 ---
 
-### 6.11 Review / AggregateRating — 별점 (비자사 한정)
+### 6.11 Review / AggregateRating — 별점 (Product 실고객 허용 · Org/Local 자사 통제 금지)
 
-- **언제**: **독립적으로** 리뷰하는 대상(제3자 상품·서비스·강좌 등). 자사 홈페이지가 자사 상품/서비스를 자기 별점 매기는 것 = ⚠ **self-serving, 리치결과 부적격**.
+- **언제**: 리뷰 대상에 대한 별점. **Product**는 자사가 파는 상품이라도 **진짜 고객이 남긴** 리뷰/aggregateRating이면 허용(별점 리치 유효). **Organization/LocalBusiness**(회사·브랜드·기관 자체)에 대해 자사가 통제하는 리뷰를 자기 사이트에 마크업하면 = ⚠ **self-serving, 별점 리치결과 부적격**(수동 조치는 없음). 공통 금지 = 조작·handpicked testimonial·미검증(가짜) 리뷰.
 - **필수**(Review): `itemReviewed`(리뷰 대상 + `name`), `reviewRating`(`ratingValue`, `bestRating`), `author`. AggregateRating: `ratingValue`, `ratingCount`/`reviewCount`, `itemReviewed`.
 - **엔진**: Google ✅(정책 준수 시). Naver ⚠.
 - **검증**: RRT(Review snippet) + Schema Validator.
@@ -524,7 +534,7 @@ curl -sL https://<site>/<page> | grep -oE '<link rel="canonical"[^>]*>|"@type":"
 }
 </script>
 ```
-> ⚠ 세부 정책(어떤 타입에 별점이 유효한지, self-serving 범위)은 세션에서 1차 문서 직접 확인 못 함 — [Review snippet docs](https://developers.google.com/search/docs/appearance/structured-data/review-snippet)로 재확인 후 적용.
+> **[검증 2026-07]** self-serving 범위는 1차 문서로 확인됨: 제한은 **LocalBusiness/Organization(및 하위 타입)에만** 적용되고 **Product에는 적용되지 않는다**(자사 상품 실고객 별점 허용). 출처: [Review snippet docs](https://developers.google.com/search/docs/appearance/structured-data/review-snippet), [Making Review Rich Results more helpful (2019-09)](https://developers.google.com/search/blog/2019/09/making-review-rich-results-more-helpful).
 
 ---
 

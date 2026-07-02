@@ -1,6 +1,14 @@
+---
+last_verified: 2026-07
+reverify_by: 2026-Q4
+ssot_owner: "robots.txt 템플릿 · 검색/AI 봇 목록 (§A)"
+---
+
 # robots.txt / sitemap / RSS / IndexNow 템플릿
 
 > Generated 2026-07-01 · Owner: Henry Oh (KORVIA) · ⚠ 콘솔/API 변경은 사용 전 재확인
+>
+> **SSOT**: 이 문서 **§A가 robots.txt 템플릿·검색/AI 봇 목록의 유일 원본(owner)**이다. 다른 문서(MULTI_ENGINE·CONTENT_AUTORULES·GEO_AEO 등)는 값 재기입 대신 여기로 링크한다. (IndexNow 참여 엔진 목록의 owner는 [`BING_YAHOO_INDEXNOW.md`](./BING_YAHOO_INDEXNOW.md) — 이 문서는 [V8] 값+링크만 보유.)
 >
 > 이 문서는 `korvia-seo-skill/docs/`의 **기계적 기술 토대 + 바로 쓰는 템플릿** 전담이다.
 > 콘텐츠/AEO/GEO **전략**(왜/무엇/Princeton 근거·플랫폼별 인용 성향)은 [`AEO_GEO_PLAYBOOK_2026.md`](./AEO_GEO_PLAYBOOK_2026.md),
@@ -25,7 +33,7 @@
 9. **`<lastmod>`는 실제 콘텐츠 변경 시각으로만** 갱신. `priority`/`changefreq`는 Google이 무시하므로 신뢰 신호로 쓰지 말 것.
 10. **IndexNow 핑은 변경분만**(신규/수정/삭제 URL). 전체 사이트맵 재핑 금지(429·스팸). 요청당 최대 10,000 URL.
 11. **IndexNow 키 = a-z/A-Z/0-9/대시 8~128자**(⚠ "16진수만" 아님, §F.1). `{key}.txt`를 루트에 UTF-8로.
-12. **Google은 IndexNow 미참여** → Google은 sitemap + GSC로만 처리. IndexNow는 Bing·Naver·Yandex·Seznam·Yep 계열 전파.
+12. **Google·Daum은 IndexNow 미참여** → Google은 sitemap + GSC로만 처리. IndexNow 참여 엔진 = **Bing·Naver·Yandex·Seznam.cz·Yep·Amazon**([V8], indexnow.org/faq 확인 2026-07-02; 한 엔진에 핑하면 참여 엔진 전체로 자동 전파). 참여 목록의 SSOT는 [`BING_YAHOO_INDEXNOW.md`](./BING_YAHOO_INDEXNOW.md).
 13. **한국인 청중 확실 커버**는 IndexNow 제네릭 핑 + **Naver 직접 엔드포인트** 병행(§F.3, 제네릭→Naver 실전파는 공식 미확인).
 14. **CWV good** = LCP ≤2.5s / INP ≤200ms / CLS ≤0.1(필드 75퍼센타일). ⚠ "LCP 2.0s 강화"·"Engagement Reliability"는 **비공식 미확인 → 채택 금지**(§H).
 15. **YMYL(Korvia 비자/취업, Kimchi 통신/금융)**은 **정확성 게이트 통과 후에만** IndexNow 핑 — 부정확한 최신 버전이 AI(Copilot/Yahoo/Naver)에 빠르게 인용되는 것을 막는다.
@@ -49,10 +57,12 @@
 
 ### A.1 검색봇 허용 (Googlebot / Bingbot / Yeti / Daumoa)
 
-4개 엔진의 **색인 크롤러는 전부 명시 허용**한다. 아래는 공통 상단 블록.
+4개 엔진의 **색인 크롤러는 전부 명시 허용**한다. 아래는 각 봇을 명시적으로 보여주기 위한 예시 블록이다.
+
+> ⚠ **이 블록만 떼어 쓰지 말 것**: 이렇게 이름별 그룹을 두고 뒤에 `User-agent: * / Disallow: …`를 붙이면, 이름 그룹들은 **자기 그룹만 읽고 `*`의 Disallow를 상속하지 않는다**(RFC 9309 — 봇은 매칭되는 그룹 하나만 따름) → 차단하려던 운영 경로가 검색봇에 그대로 노출된다. **완성 robots.txt는 §A.3**(전면 허용 봇을 `User-agent: *` 하나로 흡수)를 쓰라.
 
 ```txt
-# ── 검색 색인 크롤러 (전면 허용) ──
+# ── 검색 색인 크롤러 (전면 허용) — ⚠ 예시. 완성본은 §A.3 ──
 User-agent: Googlebot
 Allow: /
 
@@ -79,7 +89,7 @@ Allow: /
 | 봇 (user-agent) | 벤더 | 유형 | robots 준수 | KORVIA 권고 | 근거·정정 |
 |---|---|---|---|---|---|
 | **Googlebot** | Google | 검색+AI Overviews 원천 | 예 | **허용(필수)** | 차단 = 구글·AI Overviews 소멸 |
-| **Google-Extended** | Google | 학습(Gemini/Vertex) | 예 | 허용(기본) | ⚠ Search·랭킹·AI Overviews **무영향**(공식). AI Overviews는 라이브 인덱스라 이걸로 못 끔. 일부 3rd-party는 반대 주장 → [공식](https://developers.google.com/search/docs/crawling-indexing/google-common-crawlers) 근거 채택 |
+| **Google-Extended** | Google | 학습/그라운딩(Gemini 앱·Vertex AI) | 예 | 허용(기본) | ⚠ **[V3] Search·랭킹·AI Overviews·AI Mode 노출과 무관**(공식, ai-features 확인 2026-07). AIO·AI Mode 노출은 **일반 검색과 동일한 로봇 제어**(`nosnippet`/`data-nosnippet`/`max-snippet`/`noindex`)로만 관리 — Google-Extended는 **Gemini 앱·Vertex AI 등 Google의 다른 시스템** 학습·그라운딩 제한용이라 이걸로 검색 노출을 못 끈다. 일부 3rd-party는 반대 주장 → [ai-features(공식)](https://developers.google.com/search/docs/appearance/ai-features)·[common-crawlers](https://developers.google.com/search/docs/crawling-indexing/google-common-crawlers) 근거 채택 |
 | **Bingbot** | Microsoft | 검색+Copilot | 예 | **허용(필수)** | Yahoo·DuckDuckGo·Copilot 백엔드 |
 | **OAI-SearchBot** | OpenAI | 검색/인용 | 예 | **허용(필수)** | ChatGPT 검색 인용 자격 |
 | **GPTBot** | OpenAI | 학습 | 예 | 허용(기본)/유료경로 차단 | 검색봇과 분리 토큰 → 차단해도 인용 유지 |
@@ -104,35 +114,23 @@ Allow: /
 
 ```txt
 # robots.txt — www.passome.com / actartcenter.com (브랜드 노출 극대화)
-# 검색 색인 크롤러
-User-agent: Googlebot
-Allow: /
-User-agent: Bingbot
-Allow: /
-User-agent: Yeti
-Allow: /
-User-agent: Daumoa
-Allow: /
-User-agent: Applebot
-Allow: /
+#
+# ⚠ robots.txt 그룹 규칙(RFC 9309): 크롤러는 자신과 매칭되는 "가장 구체적인 그룹 하나"만
+#    따르고 User-agent: * 를 상속하지 않는다. 검색/인용봇마다 별도 'Allow: /' 그룹을 주면
+#    * 의 Disallow(/admin/·/api/…)를 못 받아 운영 경로가 그대로 크롤된다. Allow 는 기본값이라
+#    "전면 허용" 봇은 별도 그룹을 두지 말고 * 로 흡수한다.
+#    전면 허용 대상(문서용 목록·차단 아님): Googlebot Bingbot Yeti Daumoa Applebot
+#                                       OAI-SearchBot PerplexityBot Claude-SearchBot
 
-# AI 검색/인용 봇 — 전면 허용(인용 자격 유지)
-User-agent: OAI-SearchBot
-Allow: /
-User-agent: PerplexityBot
-Allow: /
-User-agent: Claude-SearchBot
-Allow: /
-
-# 그 외 모든 봇(학습봇 포함) 허용 + 운영 경로만 차단
+# 전 봇 공통 — 검색/인용봇 포함 전면 허용 + 운영 경로만 차단
 User-agent: *
 Allow: /
 Disallow: /admin/
 Disallow: /api/
-Disallow: /_next/
 Disallow: /*?*sessionid=
+# ⚠ /_next/ 는 Disallow 금지 — /_next/static 의 JS/CSS 차단 시 크롤러가 렌더 못 함(§A.4)
 
-# 비준수 공격 크롤러 (WAF 병행)
+# 비준수 공격 크롤러 (별도 그룹 → WAF 병행)
 User-agent: Bytespider
 Disallow: /
 
@@ -143,51 +141,42 @@ Sitemap: https://www.passome.com/sitemap.xml
 
 ```txt
 # robots.txt — www.korvia.com / www.kimchimobile.com (YMYL, 인용 개방·유료경로 학습 차단)
-User-agent: Googlebot
-Allow: /
-User-agent: Bingbot
-Allow: /
-User-agent: Yeti
-Allow: /
-User-agent: Daumoa
-Allow: /
-User-agent: Applebot
-Allow: /
+#
+# ⚠ RFC 9309: 봇은 자기와 매칭되는 그룹 하나만 따르고 User-agent: * 를 상속하지 않는다.
+#    → 경로 제한이 필요 없는 검색/인용봇은 별도 그룹을 두지 말고 * 로 흡수하고,
+#      별도 그룹이 꼭 필요한 봇(학습봇·Bytespider)에는 공용 운영경로 Disallow를 반드시 반복한다.
+#    전면 허용 대상(문서용 목록·차단 아님): Googlebot Bingbot Yeti Daumoa Applebot
+#                                       OAI-SearchBot PerplexityBot Claude-SearchBot
 
-# AI 검색/인용 봇 — 전면 허용
-User-agent: OAI-SearchBot
-Allow: /
-User-agent: PerplexityBot
-Allow: /
-User-agent: Claude-SearchBot
-Allow: /
-
-# AI 학습 봇 — 유료/독점 경로만 차단(나머지는 브랜드 편입 허용)
-User-agent: GPTBot
-Disallow: /pricing-internal/
-User-agent: ClaudeBot
-Disallow: /pricing-internal/
-User-agent: Google-Extended
-Disallow: /pricing-internal/
-User-agent: Applebot-Extended
-Disallow: /pricing-internal/
-User-agent: CCBot
-Disallow: /pricing-internal/
-
-# robots 무시 fetcher는 여기서 못 막음(→ Cloudflare WAF): Perplexity-User, ChatGPT-User
-# Claude-User는 준수하므로 필요 시 아래로 차단 가능:
-# User-agent: Claude-User
-# Disallow: /pricing-internal/
-
-# 기본
+# 검색·인용봇 포함 전 봇 전면 허용 + 운영 경로만 차단
 User-agent: *
 Allow: /
 Disallow: /admin/
 Disallow: /api/
-Disallow: /_next/
 Disallow: /wp-admin/          # (Kimchi WordPress만)
 Allow: /wp-admin/admin-ajax.php
+# ⚠ /_next/ 는 Disallow 금지 — /_next/static 의 JS/CSS 차단 시 렌더 깨짐(§A.4)
 
+# AI 학습봇 — 유료/독점 경로 차단. 별도 그룹은 * 를 상속하지 않으므로 공용 Disallow를 여기 반복.
+# (여러 User-agent 줄 = 이 봇들에 공통 적용되는 한 그룹)
+User-agent: GPTBot
+User-agent: ClaudeBot
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: CCBot
+Allow: /
+Disallow: /pricing-internal/
+Disallow: /admin/
+Disallow: /api/
+
+# robots 무시 fetcher는 여기서 못 막음(→ Cloudflare WAF): Perplexity-User, ChatGPT-User
+# Claude-User는 준수하므로 필요 시(별도 그룹이라 공용 Disallow도 반복해야 함):
+# User-agent: Claude-User
+# Disallow: /pricing-internal/
+# Disallow: /admin/
+# Disallow: /api/
+
+# 비준수 공격 크롤러 (WAF 병행)
 User-agent: Bytespider
 Disallow: /
 
@@ -200,6 +189,7 @@ Sitemap: https://www.korvia.com/sitemap.xml
 
 - `robots.txt Disallow`는 **크롤 차단**이지 색인 제외가 아니다. 색인에서 빼려면 페이지에 `<meta name="robots" content="noindex">` 또는 응답 헤더 `X-Robots-Tag: noindex`.
 - **함정**: `Disallow` + `noindex` 동시 지정 = 크롤러가 페이지를 못 읽어 `noindex`를 못 봄 → 오히려 색인 잔존. **noindex 대상은 크롤을 허용**하라.
+- **함정: 렌더 자산 차단 금지** — `Disallow: /_next/`(또는 CSS/JS 번들)로 Next.js 빌드 자산을 통째로 막으면 Googlebot·AI 크롤러가 페이지를 렌더할 리소스를 못 가져와 본문·레이아웃이 깨진 채 색인/평가된다(Google Search Central "CSS·JS를 차단하지 말라"). 정작 민감한 것은 데이터 라우트(`/api/`)이므로 그것만 좁게 차단하고 **`/_next/`(특히 `/_next/static`)는 열어둔다**. 크롤 예산이 정말 걱정되면 `/_next/image`(이미지 옵티마이저)만 선택적으로 Disallow.
 
 ### A.5 Cloudflare AI Crawl Control 주의 (Korvia·Kimchi 해당 시)
 
@@ -353,21 +343,26 @@ import type { MetadataRoute } from 'next';
 
 const BASE = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.korvia.com').trim();
 
+// ⚠ MetadataRoute.Robots 의 rules[] 는 각 객체가 별도 robots 그룹으로 출력된다.
+//    robots.txt 그룹 규칙(RFC 9309): 봇은 자기와 매칭되는 그룹 하나만 따르고 { userAgent:'*' } 를
+//    상속하지 않는다 → 검색/인용봇에 별도 rule을 주면 공용 Disallow를 못 받아 운영 경로가 노출된다.
+//    ⇒ 전면 허용 봇은 rule을 따로 두지 말고 * 로 흡수하고, 경로 제한이 필요한 봇(학습봇·Bytespider)에만
+//      별도 rule을 두되 공용 Disallow를 명시 반복한다.
+//    ⚠ /_next/ 는 disallow 금지 — /_next/static 의 JS/CSS 차단 시 렌더 깨짐(§A.4).
+const OPS_DISALLOW = ['/admin/', '/api/', '/*?*sessionid=']; // /_next/ 는 넣지 말 것
+
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
-      // 검색 색인 크롤러
-      { userAgent: ['Googlebot', 'Bingbot', 'Yeti', 'Daumoa', 'Applebot'], allow: '/' },
-      // AI 검색/인용 봇 — 전면 허용
-      { userAgent: ['OAI-SearchBot', 'PerplexityBot', 'Claude-SearchBot'], allow: '/' },
-      // AI 학습 봇 — 유료/독점 경로만 차단 (YMYL 버전)
+      // 검색·인용봇 포함 전면 허용 봇(Googlebot·Bingbot·Yeti·Daumoa·Applebot·
+      //   OAI-SearchBot·PerplexityBot·Claude-SearchBot)은 * 로 흡수 + 운영 경로만 차단
+      { userAgent: '*', allow: '/', disallow: OPS_DISALLOW },
+      // AI 학습 봇 — 유료/독점 경로 차단 + 공용 Disallow 반복(그룹은 * 를 상속 안 함)
       {
         userAgent: ['GPTBot', 'ClaudeBot', 'Google-Extended', 'Applebot-Extended', 'CCBot'],
         allow: '/',
-        disallow: ['/pricing-internal/'],
+        disallow: ['/pricing-internal/', ...OPS_DISALLOW],
       },
-      // 기본
-      { userAgent: '*', allow: '/', disallow: ['/admin/', '/api/', '/_next/', '/*?*sessionid='] },
       // 비준수 크롤러 (WAF 병행)
       { userAgent: 'Bytespider', disallow: '/' },
     ],
@@ -424,7 +419,7 @@ const KEY = process.env.INDEXNOW_KEY!; // {KEY}.txt 를 public/에 호스팅 (§
 export async function pingIndexNow(urls: string[]): Promise<boolean> {
   const host = new URL(BASE).host;
   const body = { host, key: KEY, keyLocation: `${BASE}/${KEY}.txt`, urlList: urls }; // 변경분만, ≤10,000
-  // 1) 제네릭(Bing·Yandex·Seznam·Yep·IA·Amazon 전파)
+  // 1) 제네릭(Bing·Yandex·Seznam.cz·Yep·Amazon 전파 — [V8] 참여 엔진, Naver는 아래 별도 핑)
   const generic = await fetch('https://api.indexnow.org/indexnow', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json; charset=utf-8' },
@@ -556,7 +551,7 @@ Content-Type: application/json; charset=utf-8
 | **Bing** | Bing Webmaster Tools → **Sitemaps** | sitemap URL 제출. 등록=GSC Import(동일 Google 계정) 또는 `msvalidate.01` meta | index당 자식 50k. URL 제출/수동=일 10,000(도메인 단위, UTC 자정 리셋). ⚠ 신규 사이트 초기 쿼터 "100"은 비공식 → BWT "Submit URLs"서 실값 확인 |
 | **Naver** | Search Advisor → **요청 > 사이트맵 제출** | 도메인 하위 sitemap.xml URL 입력 → 확인 | **XML만·사이트당 1개** → index 1개로 통합. RSS는 **요청 > RSS 제출** 별도. ⚠ 개별 URL 색인='요청 > 웹페이지 수집'(일일 한도 50/100 **공식 미노출** → 콘솔 표기 기준) |
 | **Daum/Kakao** | ① `register.search.daum.net` 검색등록(수동, 5일 심사) ② `webmaster.daum.net` 웹마스터도구(PIN 소유확인 → 수집요청 > **수집 Seed URL 등록(사이트맵)**) | Seed URL=사이트맵/RSS/Atom/목록페이지 | 파일당 5만 URL·50MB, **모든 URL 호스트=제출 호스트 동일**(크로스도메인 불가). 수집 수개월 가능. ⚠ 소유·플랫폼 대개편(→Upstage) 중 → URL/정책 분기별 재확인 |
-| **IndexNow** (Bing·Naver·Yandex·Seznam·Yep·IA·Amazon) | `api.indexnow.org/indexnow`(제네릭) + `searchadvisor.naver.com/indexnow` | §F POST/GET | Google 미참여 |
+| **IndexNow** (Bing·Naver·Yandex·Seznam.cz·Yep·Amazon) | `api.indexnow.org/indexnow`(제네릭) + `searchadvisor.naver.com/indexnow` | §F POST/GET | **Google·Daum 미참여**([V8], indexnow.org/faq 2026-07-02). 참여 목록 SSOT=[`BING_YAHOO_INDEXNOW.md`](./BING_YAHOO_INDEXNOW.md) |
 
 **Naver 가이드 슬러그 (⚠ 콘솔 개편으로 재편 — 발행 전 404 여부 실검증):**
 - 확인된 것: `/guide/faq-start-register`(등록·소유확인), `/guide/request-crawl`(수집요청), `/guide/url-inspection`(URL 검사), `/guide/report-crawl-refine`(수집 현황), `/guide/report-seo`(사이트 최적화), `/guide/structured-data-intro`(+`-faq`/`-howto`/`-video`/`-channel`).
@@ -578,8 +573,11 @@ curl -sL https://www.korvia.com/PAGE | grep -oE '<link rel="canonical"[^>]*>|"@t
 # 2) AI 크롤러가 JS 없이 본문을 읽는가 (빈 <div id=root> = AI 검색 투명인간)
 curl -sL -A "OAI-SearchBot" https://www.korvia.com/PAGE | grep -c "핵심 본문 문구"
 
-# 3) robots.txt에 Sitemap 지시 + 인용봇 미차단
-curl -sL https://www.korvia.com/robots.txt | grep -iE "sitemap|OAI-SearchBot|PerplexityBot|Yeti|Daumoa"
+# 3) robots.txt에 Sitemap 지시 존재 + 검색/인용봇 미차단
+#    (§A 신형 템플릿은 전면 허용 봇을 User-agent: * 로 흡수 → 봇 이름이 안 보이는 게 정상)
+curl -sL https://www.korvia.com/robots.txt | grep -iE "^sitemap:|^user-agent:|^disallow:"
+#    → 육안 확인: 'Disallow: /'(전면차단)는 Bytespider 그룹에만 있을 것,
+#      Sitemap: 절대URL 존재, 검색/인용봇(Googlebot·Yeti·OAI-SearchBot 등)에 붙은 'Disallow: /' 없음
 
 # 4) sitemap 200 + lastmod 유효
 curl -sI https://www.korvia.com/sitemap.xml | head -1
@@ -589,7 +587,7 @@ curl -sI https://www.korvia.com/a1b2c3d4e5f6a7b8.txt | head -1
 curl -s "https://api.indexnow.org/indexnow?url=https://www.korvia.com/PAGE&key=a1b2c3d4e5f6a7b8" -o /dev/null -w "%{http_code}\n"
 ```
 
-발행 후: IndexNow POST(→ Bing/Naver/Yandex, §D.3·§F) + Google은 sitemap 갱신/ GSC 색인요청. GSC **Gen-AI 성능 리포트**(2026-06-03 출시, impressions-only)는 ⚠ 초기 롤아웃이 일부(초기 영국) 속성 한정 → **한국 소재 속성엔 아직 안 뜰 수 있음(안 보여도 정상)**.
+발행 후: IndexNow POST(→ Bing/Naver/Yandex, §D.3·§F) + Google은 sitemap 갱신/ GSC 색인요청. GSC **Gen-AI 성능 리포트**([V1] 2026-06-03 출시, gen-ai-performance-reports)는 AI Overviews·AI Mode 등 Search 및 Discover의 생성형 AI 기능에서 사이트 URL이 노출된 **impressions만** 보여준다(clicks·CTR·평균순위·쿼리 분해 없음; 페이지·국가·기기·날짜별, Search/Discover 별도 리포트). ⚠ 초기 롤아웃이 일부(초기 영국) 속성 한정 → **한국 소재 속성엔 아직 안 뜰 수 있음(안 보여도 정상)**. **[V1] 함께 도입된 AI 기능 옵트아웃 토글**(오버뷰/AI Mode/Discover 내 AI Overviews 미노출)은 **일반 Google 검색 순위·Discover 피드 노출에 영향 없음**(순위 페널티 없음) — 상세는 [`GOOGLE_SEARCH_CONSOLE_INDEXING.md`](./GOOGLE_SEARCH_CONSOLE_INDEXING.md).
 
 ---
 
@@ -633,10 +631,12 @@ curl -s "https://api.indexnow.org/indexnow?url=https://www.korvia.com/PAGE&key=a
 - Google — Redirects: https://developers.google.com/search/docs/crawling-indexing/301-redirects
 - Google — Page Experience: https://developers.google.com/search/docs/appearance/page-experience
 - Google — Common crawlers(Google-Extended): https://developers.google.com/search/docs/crawling-indexing/google-common-crawlers
-- Google — Gen-AI performance reports(2026-06-03): https://developers.google.com/search/blog/2026/06/gen-ai-performance-reports
+- Google — AI features(AIO/AI Mode robots 제어, [V3] 확인 2026-07): https://developers.google.com/search/docs/appearance/ai-features
+- Google — Gen-AI performance reports([V1] 2026-06-03): https://developers.google.com/search/blog/2026/06/gen-ai-performance-reports
 - web.dev — Web Vitals(LCP/INP/CLS): https://web.dev/articles/vitals
 - Open Graph protocol: https://ogp.me/
 - IndexNow — Documentation: https://www.indexnow.org/documentation
+- IndexNow — FAQ(참여 엔진 [V8], 확인 2026-07-02): https://www.indexnow.org/faq
 - IndexNow — Participating engines(JSON): https://www.indexnow.org/searchengines.json
 - Bing — IndexNow get started: https://www.bing.com/indexnow/getstarted
 - Bing — Structured data: https://www.bing.com/webmasters/help/marking-up-your-site-with-structured-data-3a93e731
