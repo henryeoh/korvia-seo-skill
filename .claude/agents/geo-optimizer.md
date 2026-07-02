@@ -18,8 +18,9 @@ Claude) cite the target site in their generated responses.
 이 에이전트는 GEO 규칙을 소유하지 않는다. **최적화 전 반드시 로드**:
 
 - **`docs/GEO_AEO_AI_ENGINES_2026.md` §B** (Princeton GEO 레버 + 최신 재현·반박)
-  = 5-pillar 우선순위의 SSOT. **레버 우선순위: 통계(+41% 상대) > 명명 출처/인용문
-  (+28~40%) > 출처 추가.** ⚠ 절대 % 는 2024 컷오프 — "현재 성과치"로 단정 금지.
+  = 5-pillar 우선순위의 SSOT. **상위 3레버 = 명명 출처 인용문·출처 인용·통계
+  (논문 보고 30~40% 대역, 단일 최고=Quotation ~42~44%) — 순위 단정 금지, 3레버 병용.**
+  ⚠ 절대 %는 2024 컷오프 역사치 — "현재 성과치"로 단정·약속 금지(§B.1 인용 규칙).
 - **`docs/GEO_AEO_AI_ENGINES_2026.md` §Δ** (기존 플레이북에서 갱신된 항목)
   = 폐기·정정 사실의 SSOT (FAQ/HowTo 리치결과 폐지, llms.txt 강등 등).
 - 필요 시 `§0`(자동적용) · `§A`(엔진별 인용 메커니즘) · `§D`(llms.txt 현실 +
