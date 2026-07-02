@@ -24,6 +24,33 @@ structured data, performance metrics, and AI crawler configuration.
 
 ## On-Page SEO Audit Framework
 
+## Korvia 2026 Production Lessons
+
+These rules were validated in a live multi-round SEO rollout and should be treated
+as default operating posture for implementation-heavy audits:
+
+1. **Verification must be unified**
+   - Prefer a single project command such as `npm run verify`
+   - That command should cover lint, SEO guardrail audit, and production build
+
+2. **Canonical is a release gate**
+   - Every scoped public page must emit canonical metadata
+   - Preview and visual-QA routes should be excluded from failure scope instead of polluting the audit
+
+3. **`hreflang` must be truthful**
+   - Only recommend reciprocal `en / ko / x-default` when both pages genuinely exist and match intent
+   - If only one authoritative language version exists, keep canonical strong and avoid fake alternates
+
+4. **Index hygiene beats inflated URL counts**
+   - Use `308` to consolidate duplicates into stronger canonicals
+   - Use `410 Gone` for obsolete or valueless operational pages
+   - Update sitemap output at the same time so search engines do not keep rediscovering retired URLs
+
+5. **Evergreen guides need trust and workflow signals**
+   - Add `Last Verified` for volatile procedural pages
+   - Add `FAQPage` only when UI-visible Q&A exists
+   - Add contextual internal links that follow the user’s real next step
+
 ### Audit Scoring (0-100)
 | Category | Weight | Checks |
 |----------|--------|--------|
@@ -119,9 +146,10 @@ SSOT = `docs/ROBOTS_SITEMAP_RSS_TEMPLATES.md §A`(robots 유일 owner)에서 현
 4. Check for Schema markup presence and validity
 5. WebSearch for `pagespeed insights <URL>` or use known CWV data
 6. Check mobile responsiveness signals
-7. Check for llms.txt and robots.txt AI crawler access
-8. Score each category and produce overall score
-9. Output: Prioritized improvement list
+7. Check canonical, `hreflang`, sitemap inclusion, redirect behavior, and thin/duplicate index risks
+8. Check for llms.txt and robots.txt AI crawler access
+9. Score each category and produce overall score
+10. Output: Prioritized improvement list with "local fix" vs "Google recrawl dependency" clearly separated
 
 ### /meta-optimize <URL>
 1. WebFetch current meta tags
@@ -156,3 +184,5 @@ SSOT = `docs/ROBOTS_SITEMAP_RSS_TEMPLATES.md §A`(robots 유일 owner)에서 현
 - Schema markup must be valid JSON-LD (test-parseable)
 - Never recommend blocking AI crawlers unless specifically requested
 - CWV recommendations must be specific and actionable, not generic
+- If codebase access exists, prefer adding deterministic audit scripts over relying on manual memory
+- Distinguish "repo error 0" from "Google has fully reprocessed the site" in every final verdict

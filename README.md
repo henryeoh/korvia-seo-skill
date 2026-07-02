@@ -169,6 +169,14 @@ Proven orchestration for 10+ file bulk operations:
 - E-E-A-T signal injection verification
 - Author attribution enforcement
 
+### Production Guardrails Learned From Korvia 2026
+- Single verification gate: `lint + seo audit + build`
+- Canonical coverage as a non-negotiable release condition
+- Reciprocal `hreflang` only for real bilingual page pairs
+- `308` consolidation + `410 Gone` pruning for index hygiene
+- `Last Verified` + `FAQPage` + contextual CTA for evergreen guides
+- Hub-and-spoke internal linking based on the user journey, not menu depth
+
 ### Google Ads (SEM)
 - Signal-based automation architecture
 - Smart Bidding + Broad Match + RSA strategy
@@ -242,6 +250,37 @@ Production-proven additions from www.korvia.com 2-day sweep (21+ commits):
 
 ### v1 (2026-04-15)
 Initial 6-agent SEO team with 24-item quality gate.
+
+## Korvia 2026 Operational Learnings
+
+These patterns were validated on the live `www.korvia.com` rollout and are now
+recommended defaults for this skill:
+
+1. **Use a single release gate**
+   - A site is not “SEO clean” unless lint, metadata guardrails, and production build all pass together.
+   - Recommended pattern: `npm run verify -> lint + seo audit + build`.
+
+2. **Treat canonicals as release blockers**
+   - Every public indexable page should emit a canonical URL.
+   - Preview, QA, or intentionally noindex routes should be excluded from failure scope instead of polluting the audit.
+
+3. **Do not fake `hreflang`**
+   - Only emit reciprocal `en/ko/x-default` when the counterpart page truly exists and matches intent.
+   - If a Korean page does not exist, prefer `en + x-default` rather than weak translation mapping.
+
+4. **Favor index hygiene over page-count vanity**
+   - Consolidate duplicate legacy URLs with `308` redirects.
+   - Remove thin or obsolete operational pages with `410 Gone`.
+   - Exclude retired URLs from sitemap output at the same time.
+
+5. **Upgrade evergreen content with trust and next-step signals**
+   - Add `Last Verified` to sensitive procedural guides.
+   - Add `FAQPage` JSON-LD where the questions are truly represented in the UI.
+   - Add contextual CTAs and related-guide links based on the user’s real next step.
+
+6. **Build topical authority as a workflow**
+   - Connect pages by user timeline: arrival -> immigration -> ARC -> banking -> mobile.
+   - This performs better than isolated “related links” blocks because both users and search engines read the sequence as intent-consistent.
 
 ## Requirements
 

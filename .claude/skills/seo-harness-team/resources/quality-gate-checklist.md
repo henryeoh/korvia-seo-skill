@@ -34,6 +34,14 @@ Use this checklist for rapid quality verification of any SEO content.
 - [ ] **Core Web Vitals**: No LCP/INP/CLS regressions
 - [ ] **Mobile friendly**: Responsive, readable
 
+## Production Guardrails (5 items)
+
+- [ ] **Canonical coverage**: Every scoped public page has a canonical
+- [ ] **Truthful hreflang**: Reciprocal alternates only where real language pairs exist
+- [ ] **Index hygiene**: Duplicate or obsolete URLs are routed via `308` or `410` and removed from sitemap scope
+- [ ] **Verification gate**: Project has a repeatable lint + SEO audit + build command
+- [ ] **External dependency clarity**: Final report distinguishes local pass status from Google recrawl lag
+
 ## GEO (4 items)
 
 - [ ] **Quick Answer Block**: 40-80 words at page top
@@ -43,4 +51,4 @@ Use this checklist for rapid quality verification of any SEO content.
 
 ---
 
-**Scoring**: 24/24 = PASS | 21-23 = Minor fixes | 18-20 = Significant revision | <18 = Reject
+**Scoring**: 29/29 = PASS | 25-28 = Minor fixes | 21-24 = Significant revision | <21 = Reject

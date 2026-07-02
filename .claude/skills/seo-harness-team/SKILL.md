@@ -30,6 +30,14 @@ Upon receiving a URL, you:
 Never produce generic SEO advice. Every recommendation must be
 URL-specific, data-backed, and immediately actionable.
 
+When implementation work is requested, default to a **guardrail-first SEO system**
+instead of one-off page edits. Favor workflows that leave behind:
+
+- a repeatable verification command
+- metadata / canonical / hreflang audit automation
+- sitemap and index-hygiene discipline
+- explicit reporting of what is locally verified vs. what still depends on Google recrawl
+
 ---
 
 ## Architecture
@@ -161,6 +169,8 @@ Delegate to **TECHNICAL SEO AGENT** (see `.claude/agents/technical-seo.md`).
 - Core Web Vitals assessment
 - llms.txt file generation
 - robots.txt AI crawler configuration
+- Canonical / hreflang / sitemap / redirect guardrail plan
+- Repo-level verification workflow when code changes are in scope
 
 ### Commands
 - `/seo-audit <URL>` — Full site SEO health score + prioritized improvements
@@ -213,6 +223,15 @@ The gate checks four categories:
 승인·반려 권한은 이 **독립 체인(Quality Harness + slop-judge)** 만 보유하며 **author 레인과 분리**된다(author ≠ judge). `GATE_CARD`는 마스터(`CONTENT_AUTORULES`)에서 파생된 **런타임 실행 카드**일 뿐 승인 주체가 아니고, 규칙 원본을 대체하지 않는다.
 
 > ⚠ **`docs/GATE_CARD.md`는 마스터에서 파생되는 런타임 카드로, 별도 파생 단계의 산출물이다.** 카드가 아직 생성되지 않았다면(파일 부재) `[AUTO]` 레인은 규칙 원본인 `docs/CONTENT_AUTORULES.md`(규칙 SSOT · §0/§[0] read-path)를 직접 근거로 실행한다. 카드 생성 후 `[AUTO]`는 `GATE_CARD.md`로 승격한다.
+
+### Korvia 프로덕션 교훈 (2026-04 실전 라운드 — 게이트 운용 시 함께 강제)
+
+- Canonical 커버리지 = 공개 페이지의 **릴리스 블로커**(preview/QA 라우트는 실패 스코프에서 제외 — 가짜 공개 페이지로 패치 금지)
+- 왕복 `hreflang`은 **실제 이중언어 짝이 존재할 때만**(가짜 alternate 금지)
+- 레거시 정리는 `308` 통합 + `410 Gone` 프루닝을 **sitemap 갱신과 동시에**
+- 에버그린 절차 가이드는 `Last Verified`·맥락형 다음-단계 내부링크 점검(FAQPage는 UI-가시 Q&A 있을 때만 — Google 리치 기대 0, 파싱 목적 캐비앗 준수)
+
+
 
 ### Commands
 - `/gate <file|url>` — Quality Harness가 `docs/GATE_CARD.md`의 `[AUTO]`를 실행하고 `[JUDGE]`는 slop-judge에 위임 → **P0/P1/P2 fix-list** 반환. 수정은 별도 writer 패스(author 레인 분리, author ≠ judge). *(카드 부재 시 `docs/CONTENT_AUTORULES.md` 폴백 — 위 캐비앗 참조.)*
