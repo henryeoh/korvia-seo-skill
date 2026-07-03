@@ -205,7 +205,7 @@ export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
       // ... 기존 GPTBot/ClaudeBot/PerplexityBot 등 AI 크롤러 룰 (WEB_PLAYBOOK §1.1) ...
-      { userAgent: 'Daumoa', allow: '/', disallow: ['/api/', '/_next/', '/admin/'] },
+      { userAgent: 'Daumoa', allow: '/', disallow: ['/api/', '/admin/'] }, // ⚠ /_next/ 차단 금지(렌더 자산 — ROBOTS_SITEMAP §A.4)
     ],
     sitemap: 'https://www.example.com/sitemap.xml', // 반드시 절대 URL 단일 문자열 (.trim() 주의)
   }

@@ -212,8 +212,8 @@ User-agent: PerplexityBot
 User-agent: Claude-SearchBot
 Allow: /
 Disallow: /api/
-Disallow: /_next/
 Disallow: /admin/
+# ⚠ /_next/ 는 Disallow 금지 — /_next/static JS/CSS 차단 시 렌더 실패(CWV·AIO 불리). ROBOTS_SITEMAP §A.4
 
 # 학습봇 차단은 사업 판단으로 분리(차단해도 검색 노출 무영향)
 # User-agent: GPTBot / ClaudeBot / Google-Extended / CCBot
@@ -282,6 +282,7 @@ export async function POST(req: Request) {
   1. **검색 노출** — GSC Gen-AI 성능 리포트(impressions-only) + Bing AI Performance(인용).
   2. **AI 참조 트래픽** — GA4 기본 채널 그룹 **'AI Assistants'**(2026-05-13 추가, referrer 기반 자동 분류; ⚠ Google AIO/AI Mode는 Organic Search로 분류되어 제외) + 전용 GEO 추적 도구(Otterly.AI·Profound 등).
   3. **봇 크롤** — 서버로그 AI봇 UA(`GPTBot|OAI-SearchBot|ClaudeBot|Claude-SearchBot|PerplexityBot`) + Cloudflare AI Crawl Control(전 플랜 제공, 크롤러별 요청·CSV). AI봇 위장 필터=벤더 공식 검증 JSON(claude.com/crawling/bots.json, perplexity.com/perplexitybot.json)의 IP 대조.
+  - **[KORVIA LIVE — korvia.com]** 이 3계층은 korvia.com에서 이미 가동 — SERP 순위추적(n8n `hEF3hR84EidDO7eV`, 매일) · 키워드 갭(n8n `VSiNEXB6IghPe3Wk`, 주간) · AI 가시성 베이스라인(`ai_visibility_baseline.py`, ChatGPT 인용률 26.7%) · GSC 일일감사(n8n `rPFMJXfzX3UgMQOY`) · GA4(네이티브 'AI Assistants' 1차 분류 + 커스텀 "Default + AI Traffic" 그룹 소급/세분 보조) → Supabase `seo_intel` 저장. 구현 상세·수치 SSOT = [`HANDOFF.md`](../../reports/2026-07-02-korvia-keyword-portfolio-upgrade/HANDOFF.md)(값 복제 최소화).
 - **IndexNow 경유 AI 가속**: Bing·Naver 색인 → ChatGPT(Bing)·Naver AI 브리핑 인용 후보에 빠르게 진입.
 
 > ⚠ **llms.txt 재평가**: [`AEO_GEO_PLAYBOOK_2026.md`](./AEO_GEO_PLAYBOOK_2026.md)는 llms.txt를 권장했으나, **2026-07 검증상 주요 검색·AI 엔진은 llms.txt를 랭킹/인용에 미반영**(Google 공식 불필요, OpenAI/Anthropic/Perplexity 자동 판독 커밋 없음, 500M 봇방문 中 조준 408건). 실사용=IDE/코딩 에이전트. → **"인용 지렛대" 아님, 저ROI 실험**으로 격하. 만들더라도 정적 저비용, sitemap·크롤러빌리티를 대체하지 않음. 출처: [SEJ](https://www.searchenginejournal.com/google-says-llms-txt-is-purely-speculative-for-now/577576/)

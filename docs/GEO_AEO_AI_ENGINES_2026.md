@@ -287,6 +287,8 @@ Sitemap: https://www.korvia.com/sitemap.xml
 > 2. **AI 참조 트래픽(사람 클릭)** — GA4 기본 채널 그룹 **'AI Assistants'**(2026-05-13 추가, [V5] §E.2) + 인용·가시성 추적 SaaS(Otterly.AI·Profound 등, [V9] §E.3).
 > 3. **봇 크롤 실측** — 서버 액세스 로그 AI봇 UA + Cloudflare **AI Crawl Control**(전 플랜 무료 포함, [V11] §E.2).
 > ⚠ **Naver 측정 공백**: Naver는 **AI Briefing 인용을 보여주는 공식 콘솔 데이터가 없다** — 인용 여부는 대표 질의를 **수동 관측**하거나 자사 UGC(블로그/카페) 유입으로 간접 추정할 뿐, GSC/Bing 같은 노출 리포트가 없다.
+>
+> **[KORVIA LIVE — korvia.com 구현체]** 위 3계층은 korvia.com에서 **이미 가동 중인 n8n 파이프라인 + Supabase `seo_intel` 저장소**로 구현돼 있다: SERP 순위추적(n8n `hEF3hR84EidDO7eV`, 매일) · 키워드 갭(n8n `VSiNEXB6IghPe3Wk`, 주간) · AI 가시성 베이스라인(`ai_visibility_baseline.py`, ChatGPT 인용률 26.7%) · GSC 일일감사(n8n `rPFMJXfzX3UgMQOY`). **계층2 GA4**는 네이티브 **'AI Assistants'** 기본 채널을 1차 분류로, 커스텀 채널그룹 **"Default + AI Traffic"**(소급 적용)을 2차 세분 보조(롤아웃 이전 구간·교차검증·미분류 referrer 흡수)로 병행. → 구현 상세·수치 SSOT = [`HANDOFF.md`](../../reports/2026-07-02-korvia-keyword-portfolio-upgrade/HANDOFF.md)(값 복제 최소화, SSOT 원칙).
 
 ### E.1 GSC — 'Search 생성형 AI 성능 리포트' (2026-06-03 출시)
 - **무엇**: AI Overviews·AI Mode·Discover의 생성형 기능 **노출(impressions)**을 별도 뷰로. 차원=Pages·Countries·Devices·Dates.
