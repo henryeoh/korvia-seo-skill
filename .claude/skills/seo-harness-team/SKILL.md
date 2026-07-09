@@ -175,7 +175,7 @@ Delegate to **TECHNICAL SEO AGENT** (see `.claude/agents/technical-seo.md`).
 ### Commands
 - `/seo-audit <URL>` — Full site SEO health score + prioritized improvements
 - `/meta-optimize <URL>` — Title + Meta Description A/B sets
-- `/schema-generate <URL>` — JSON-LD Schema code
+- `/schema-generate <URL>` — JSON-LD Schema code. ⚠ FAQPage 템플릿(`resources/schema-templates/faqpage.json`) 사용 전 캐비앗 필독: `resources/schema-templates/faqpage.README.md` (Google FAQPage 리치결과 폐지 2026-05-07 → Naver·AI 답변엔진·Google 페이지이해 목적만; 리치결과 노출을 KPI로 잡지 말 것).
 - `/llms-txt <URL>` — llms.txt file auto-generation
 - `/robots-update <URL>` — AI crawler robots.txt patch
 
@@ -210,16 +210,33 @@ The gate checks four categories:
 3. **AI Humanization** (5 items): AI pattern removal, unique insights, intent match
 4. **Technical + GEO** (7 items): Schema, CWV, mobile, Quick Answer, FAQ, llms.txt, robots.txt
 
-Additional Korvia production lessons to enforce:
+> ⚠ 이 24항목 레거시 목록은 `docs/GATE_CARD.md`의 `[AUTO]` 판정식으로 대체(운영)된다. 아래 **게이트 단일 체인**을 정본으로 따른다.
 
-- Canonical coverage should be treated as a release blocker on public pages
-- Reciprocal `hreflang` should only exist for real bilingual counterparts
-- Preview / QA routes should be excluded from SEO failure scopes rather than patched as fake public pages
-- Legacy cleanup should consider `308` consolidation and `410 Gone` pruning together with sitemap updates
-- Evergreen procedural guides should be reviewed for `Last Verified`, `FAQPage`, and contextual next-step links
+### 게이트 단일 체인 (SSOT · author ≠ judge)
+
+발행 게이트는 **하나의 체인**으로만 승인/반려한다:
+
+1. **writer 자기점검** — 작성자가 `docs/CONTENT_AUTORULES.md`(규칙 SSOT) §1–22 + `docs/GATE_CARD.md`를 근거로 스스로 점검한다. *승인 권한 없음.*
+2. **`[AUTO]`** — **Quality Harness** 에이전트가 `docs/GATE_CARD.md`의 `[AUTO]` 판정식(page-type 분기·스키마 생사표·robots·SSR 등)을 기계적으로 실행한다.
+3. **`[JUDGE]`** — **slop-judge**(전역·독립·크로스모델 스킬)가 `[JUDGE]`/YMYL 최종 판정을 내린다.
+
+승인·반려 권한은 이 **독립 체인(Quality Harness + slop-judge)** 만 보유하며 **author 레인과 분리**된다(author ≠ judge). `GATE_CARD`는 마스터(`CONTENT_AUTORULES`)에서 파생된 **런타임 실행 카드**일 뿐 승인 주체가 아니고, 규칙 원본을 대체하지 않는다.
+
+> ⚠ **`docs/GATE_CARD.md`는 마스터에서 파생되는 런타임 카드로, 별도 파생 단계의 산출물이다.** 카드가 아직 생성되지 않았다면(파일 부재) `[AUTO]` 레인은 규칙 원본인 `docs/CONTENT_AUTORULES.md`(규칙 SSOT · §0/§[0] read-path)를 직접 근거로 실행한다. 카드 생성 후 `[AUTO]`는 `GATE_CARD.md`로 승격한다.
+
+### Korvia 프로덕션 교훈 (2026-04 실전 라운드 — 게이트 운용 시 함께 강제)
+
+- Canonical 커버리지 = 공개 페이지의 **릴리스 블로커**(preview/QA 라우트는 실패 스코프에서 제외 — 가짜 공개 페이지로 패치 금지)
+- 왕복 `hreflang`은 **실제 이중언어 짝이 존재할 때만**(가짜 alternate 금지)
+- 레거시 정리는 `308` 통합 + `410 Gone` 프루닝을 **sitemap 갱신과 동시에**
+- 에버그린 절차 가이드는 `Last Verified`·맥락형 다음-단계 내부링크 점검(FAQPage는 UI-가시 Q&A 있을 때만 — Google 리치 기대 0, 파싱 목적 캐비앗 준수)
+
+
 
 ### Commands
-- `/harness-check` — Run 24-item quality gate
+- `/gate <file|url>` — Quality Harness가 `docs/GATE_CARD.md`의 `[AUTO]`를 실행하고 `[JUDGE]`는 slop-judge에 위임 → **P0/P1/P2 fix-list** 반환. 수정은 별도 writer 패스(author 레인 분리, author ≠ judge). *(카드 부재 시 `docs/CONTENT_AUTORULES.md` 폴백 — 위 캐비앗 참조.)*
+- `/multi-engine-submit <url>` — 발행 후 제출 **런북(반자동 — 완전 자동 CLI 아님)**: ① **IndexNow 핑=스크립트 실행 가능**(각 사이트 레포 `npm run indexnow:ping <url>` — Bing·Naver 등 참여 엔진 커버) ② **GSC URL 검사·Naver 수집요청·Daum `webmaster.daum.net` 수집요청=콘솔 수동**(로그인 필요 — 에이전트는 사람 단계로 안내만, 자동화 금지). 상세=`docs/MULTI_ENGINE_MASTER_2026.md` §5(§2.1 체크리스트).
+- `/harness-check` — (레거시) 24항목 게이트 — `GATE_CARD [AUTO]`로 대체됨.
 - `/full-audit <URL>` — Execute ALL phases sequentially (complete report)
 
 ---
@@ -239,4 +256,6 @@ Additional Korvia production lessons to enforce:
 | `/geo-optimize <URL>` | GEO Optimizer | AI search citation optimization |
 | `/llms-txt <URL>` | Technical SEO | llms.txt file auto-generation |
 | `/robots-update <URL>` | Technical SEO | AI crawler robots.txt patch |
-| `/harness-check` | Quality Harness | 24-item quality gate execution |
+| `/harness-check` | Quality Harness | 24-item quality gate execution (레거시 → `GATE_CARD [AUTO]`) |
+| `/gate <file\|url>` | Quality Harness + slop-judge | `GATE_CARD [AUTO]` + slop-judge `[JUDGE]` → P0/P1/P2 fix-list (author 레인 분리) |
+| `/multi-engine-submit <url>` | Technical SEO | 발행후 제출 런북: IndexNow→GSC→Naver→Daum (MULTI_ENGINE §5) |

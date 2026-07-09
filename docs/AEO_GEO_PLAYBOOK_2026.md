@@ -4,6 +4,8 @@
 > `.claude/agents/technical-seo.md`(schema/llms.txt/robots)를 사용하고, 이 문서는 **왜 / 무엇을 / 근거 수치**를 담는 상위 전략 레이어다.
 >
 > Locked in: 2026-05-29 · Owner: Henry Oh (KORVIA)
+>
+> ⚠ **2026-07 갱신 안내**: 이 문서 일부 지침(FAQPage/HowTo schema 주입, llms.txt 필수)은 이후 플랫폼 변경으로 **정정**됨. 최신·정합 기준은 멀티엔진 KB를 따르라 — 스키마 생사=[`SCHEMA_JSONLD_CATALOG.md`](./SCHEMA_JSONLD_CATALOG.md) · GEO/AEO 심화=[`GEO_AEO_AI_ENGINES_2026.md`](./GEO_AEO_AI_ENGINES_2026.md) · 발행 전 게이트=[`CONTENT_AUTORULES.md`](./CONTENT_AUTORULES.md) · 허브=[`MULTI_ENGINE_MASTER_2026.md`](./MULTI_ENGINE_MASTER_2026.md).
 
 ---
 
@@ -11,9 +13,9 @@
 
 - **SEO / AEO / GEO 는 대체 관계가 아니라 누적 레이어다.** 생성형 엔진도 기존 검색의 권위·관련성 신호를 그대로 쓰므로 SEO 토대 없이는 AEO/GEO 도 안 된다.
 - 구글 검색의 **60%+ 가 클릭 없이 종료**(zero-click). SEO만 하면 "검색은 되는데 트래픽이 사라지는" 상황이 온다.
-- GEO 인용을 늘리는 검증된 레버(Princeton 연구): **전문가 인용문 +41% / 통계 +30% / 출처 인용 +30%.** → "주장만 쓰지 말고 숫자·전문가 말·출처를 박아라."
-- **플랫폼마다 인용 방식이 다르다.** ChatGPT=백과사전·Wikipedia(인용의 ~48%), Perplexity=최신성·Reddit(~47%), Google AI Overviews=기존 상위 랭킹. ChatGPT/Perplexity 양쪽에 동시 인용되는 도메인은 **11%뿐**.
-- 기술 토대: **모든 핵심 페이지 JSON-LD + 루트 `llms.txt`** (둘은 역할 분담, 같이 쓴다).
+- GEO 인용을 늘리는 검증된 레버(Princeton 연구): ~~전문가 인용문 +41% / 통계 +30% / 출처 인용 +30%~~ **[SUPERSEDED 2026-07]** 원논문 재검증 결과 특정 %를 단일 레버에 귀속 불가(상위 3레버=인용문·통계·출처, 30~40% 대역, 2024 컷오프). 정량 SSOT=[`GEO_AEO_AI_ENGINES_2026.md`](./GEO_AEO_AI_ENGINES_2026.md) §B/§Δ. 방향은 유지: "주장만 쓰지 말고 숫자·전문가 말·출처를 박아라."
+- **플랫폼마다 인용 방식이 다르다.** ChatGPT=백과사전·Wikipedia(인용의 ~48%), Perplexity=최신성·Reddit(~47%), Google AI Overviews=기존 상위 랭킹. ChatGPT/Perplexity 양쪽에 동시 인용되는 도메인은 **11%뿐**. (수치=2026 상반기 이전 3자 측정 — 방향성으로만)
+- 기술 토대: ~~모든 핵심 페이지 JSON-LD + 루트 `llms.txt` (둘은 역할 분담, 같이 쓴다)~~ **[SUPERSEDED 2026-07]** JSON-LD=유지(생사표는 [`SCHEMA_JSONLD_CATALOG.md`](./SCHEMA_JSONLD_CATALOG.md)), llms.txt=**선택·저ROI**(Google 공식 2026-06 "AI 텍스트 파일 불필요" — 주요 엔진 소비 미확인).
 
 ---
 
@@ -35,13 +37,15 @@
 
 ## 2. GEO 정량 근거 (Princeton GEO Study)
 
-| 전술 | AI 가시성 향상 |
-|------|---------------|
-| 전문가 인용문(quotes) 추가 | **약 +41%** |
-| 통계(statistics) 추가 | **약 +30%** |
-| 출처 인용(cite sources) 추가 | **약 +30%** |
+> **[SUPERSEDED 2026-07]** 아래 표의 %는 원논문(arXiv 2311.09735v3 / KDD 2024) 재검증에서 **부정확**으로 판정 — Table 1 기준 단일 최고 레버=Quotation(~42-44%), Statistics ~34%, 상위 3레버(인용문·통계·출처) 모두 30-40% 대역이며 특정 %의 단일 귀속 불가. **정량 SSOT=[`GEO_AEO_AI_ENGINES_2026.md`](./GEO_AEO_AI_ENGINES_2026.md) §B/§Δ** — 이 표를 인용하지 말 것.
 
-→ 실행 원칙: 검증 가능한 신호(숫자·전문가 말·출처)가 붙은 문장을 AI가 우선 인용한다.
+| ~~전술~~ | ~~AI 가시성 향상~~ (폐기 수치) |
+|------|---------------|
+| 전문가 인용문(quotes) 추가 | ~~약 +41%~~ |
+| 통계(statistics) 추가 | ~~약 +30%~~ |
+| 출처 인용(cite sources) 추가 | ~~약 +30%~~ |
+
+→ 실행 원칙(유효): 검증 가능한 신호(숫자·전문가 말·출처)가 붙은 문장을 AI가 우선 인용한다 — 단 절대 %는 2024 컷오프 실험치라 성과 약속에 사용 금지.
 
 ---
 
@@ -65,10 +69,10 @@
 - 우선순위: `FAQPage`, `Article`, `HowTo`, `Organization`, `Course`, `Product`, `BreadcrumbList`.
 - 템플릿: `.claude/skills/seo-harness-team/resources/schema-templates/`.
 
-### (2) llms.txt — 신규 표준
-- 사이트 루트의 Markdown 파일. 사이트가 무엇에 관한 곳인지 LLM에 깔끔한 텍스트로 요약 → 환각 대신 **검증된 브랜드 사실** 사용 유도.
-- **schema 와 역할 분담**: llms.txt = 사이트 전체 고수준 지도 / schema = 페이지별 세부. 둘을 **같이** 쓴다.
-- 실증: 핵심 페이지 JSON-LD + 큐레이션 llms.txt → 색인 후 **하루 만에** 구글 AI 답변 인용 사례.
+### (2) llms.txt — ~~신규 표준~~ **[SUPERSEDED 2026-07: 선택·저ROI]**
+> Google 공식 생성형 AI 최적화 가이드(2026-06 확인)가 "AI 노출에 새 기계판독 파일·AI 텍스트 파일 불필요"를 명시했고, 주요 답변엔진의 llms.txt 공식 소비도 미확인. **필수 아님 — 저비용 부수 실험으로만 유지**(상세=[`GEO_AEO_AI_ENGINES_2026.md`](./GEO_AEO_AI_ENGINES_2026.md)).
+- ~~사이트 루트의 Markdown 파일... 둘을 같이 쓴다~~ (구 지침 — 위 배지 기준으로 대체)
+- ~~실증: 색인 후 하루 만에 구글 AI 답변 인용 사례~~ **[정정: 인과 미입증 일화 — 재인용 금지]**
 
 ### (3) robots.txt — AI 크롤러 허용
 - GPTBot, ClaudeBot, PerplexityBot, Google-Extended 허용. 패치: `resources/robots-txt-ai-patch.txt`.
@@ -107,11 +111,11 @@
 ## 7. KORVIA 적용 플랜
 
 **Phase 1 — 기반 (즉시)**
-1. 핵심 페이지 schema 감사: FAQPage / Article / Course / Organization JSON-LD 누락 점검 (TEFL·비자·EPIK 페이지 우선).
-2. 각 도메인 `llms.txt` 생성 — 회사 정의, 핵심 서비스, 권위 근거(2013 서울시장 표창, 2018/2021 고용노동부 우수기관 인증) 명시.
+1. 핵심 페이지 schema 감사: ~~FAQPage / Article / Course~~ **[SUPERSEDED 2026-07: 생사표=`SCHEMA_JSONLD_CATALOG.md` — FAQPage 리치 2026-05-07 폐지·Course info 2025-09 폐지, Article/Organization은 유효]** JSON-LD 누락 점검 (TEFL·비자·EPIK 페이지 우선).
+2. ~~각 도메인 `llms.txt` 생성~~ **[SUPERSEDED 2026-07: 선택·저ROI — §4(2) 배지 참조. 권위 근거(2013 서울시장 표창, 2018/2021 고용노동부 우수기관 인증)는 llms.txt 아닌 본문·Organization 스키마에 명시]**
 
 **Phase 2 — 콘텐츠 GEO화**
-3. 비자/취업 가이드를 **질문형 제목 + 즉답 + 통계 + 출처 인용** 구조로 리라이트 (+41%/+30% 레버).
+3. 비자/취업 가이드를 **질문형 제목 + 즉답 + 통계 + 출처 인용** 구조로 리라이트 (검증가능 신호 3레버 — 구체 %는 **SUPERSEDED·인용 금지**, §2 배지·SSOT=`GEO_AEO §B.1` 인용 규칙 참조).
 4. EPIK Level·급여 매트릭스 등 **1차 데이터·비교표**를 명시 — AI 인용 친화 구조화 사실.
 
 **Phase 3 — 플랫폼별 + 측정**

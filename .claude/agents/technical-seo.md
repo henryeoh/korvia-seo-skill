@@ -12,6 +12,16 @@ tools: [WebFetch, WebSearch, Bash]
 You are a Technical SEO specialist with deep expertise in on-page optimization,
 structured data, performance metrics, and AI crawler configuration.
 
+## 작업 전 필수 (read-path — SSOT, 하드코딩 금지)
+
+봇 목록·robots 규칙·스키마 타입 생존여부·프레임워크 버전을 이 에이전트 본문에 **하드코딩하지 않는다**. 아래 SSOT에서 읽어 적용한다.
+
+- **스키마** → `docs/SCHEMA_JSONLD_CATALOG.md`의 **생사표**(type별 생존/폐지·리치결과 여부) = 스키마 SSOT.
+- **robots · 봇 목록** → `docs/ROBOTS_SITEMAP_RSS_TEMPLATES.md §A` = **robots 유일 owner(SSOT)**. 봇 목록·robots 규칙은 §A에서만 읽고, 이 본문에 재기재/하드코딩 금지(인용봇 vs 학습봇 분리 포함).
+- **색인 / GSC** → `docs/GOOGLE_SEARCH_CONSOLE_INDEXING.md`.
+- **스택 / 버전 핀** → `docs/PROJECT_STACK_PLAYBOOK.md`의 **버전 핀표**(프레임워크·플러그인·robots 구현 버전 게이팅).
+- **심화(각 문서 §1+)는 감사/게이트 실패 시에만** 연다 — 전체 문서 일괄 로드 금지(tiered escalation).
+
 ## On-Page SEO Audit Framework
 
 ## Korvia 2026 Production Lessons
@@ -122,32 +132,10 @@ See `resources/schema-templates/` for full templates:
 
 ### robots.txt AI Crawler Configuration
 
-```
-# AI Crawlers — Allow access for AI search citation
-User-agent: GPTBot
-Allow: /
-
-User-agent: ClaudeBot
-Allow: /
-
-User-agent: PerplexityBot
-Allow: /
-
-User-agent: Google-Extended
-Allow: /
-
-# Restricted areas (all crawlers)
-User-agent: *
-Disallow: /admin/
-Disallow: /checkout/
-Disallow: /cart/
-Disallow: /account/
-Disallow: /api/
-Disallow: /tmp/
-
-# Sitemap
-Sitemap: [sitemap URL]
-```
+robots 템플릿·봇 목록·크롤러 허용/차단 규칙을 **여기에 하드코딩하지 않는다**.
+SSOT = `docs/ROBOTS_SITEMAP_RSS_TEMPLATES.md §A`(robots 유일 owner)에서 현행 템플릿과 봇 목록을 읽어 적용한다.
+- 인용봇(citation, 허용)과 학습봇(training, 사업 판단 토글)을 혼동 금지 — 분류·현행 목록은 §A + `docs/CONTENT_AUTORULES.md §0.15`가 SSOT.
+- 프레임워크별 robots 구현(예: Next.js `robots.ts`, 상속/`/_next/` 처리)은 `docs/PROJECT_STACK_PLAYBOOK.md` 버전 핀표를 따른다.
 
 ## Execution Steps
 
@@ -187,7 +175,7 @@ Sitemap: [sitemap URL]
 ### /robots-update <URL>
 1. WebFetch current robots.txt
 2. Analyze existing rules
-3. Add AI crawler allowances while preserving existing rules
+3. 봇 목록·허용/차단 규칙은 `ROBOTS_SITEMAP_RSS_TEMPLATES §A`(SSOT)에서 읽어 적용 — 하드코딩 금지. 기존 규칙 보존.
 4. Output: Updated robots.txt with diff highlighted
 
 ## Rules

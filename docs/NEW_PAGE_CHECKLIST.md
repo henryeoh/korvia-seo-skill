@@ -4,6 +4,8 @@ description: 새 페이지 만들 때마다 최소 적용할 SEO+CLS+a11y+성능
 type: reference
 originSessionId: 10654995-dff2-4b5c-a086-7c644c9a3bb1
 ---
+
+> ⚠ **2026-07 갱신 안내**: §B(Schema)의 FAQPage/HowTo 항목은 이후 폐지로 **정정**됨. 새 페이지 발행 게이트의 최신·완전판은 [`CONTENT_AUTORULES.md`](./CONTENT_AUTORULES.md)(멀티엔진·GEO·한국엔진·이중언어 포함)를 사용하고, 이 17항목은 Next.js CLS/a11y 보조 체크로 병행.
 **목적**: 새 Next.js 페이지나 섹션 만들 때마다 "최소한 이 17개는 체크"
 
 ## A. 메타데이터 (6개)
@@ -80,5 +82,5 @@ originSessionId: 10654995-dff2-4b5c-a086-7c644c9a3bb1
 4. 최종 검증 (사람): `git status` + `git diff --cached` 확인 후 논리적 커밋 분리
 5. 배포 후 5분 뒤 Lighthouse 재측정
 
-상세: `feedback_3layer_agent_pipeline.md`
-전체 가이드: `/Users/henryoh/Library/CloudStorage/ZohoWorkDriveTrueSync-KORVIA/KORVIA IRS/KORVIA_WEB_PLAYBOOK.md`
+상세: [`./3LAYER_AGENT_PIPELINE.md`](./3LAYER_AGENT_PIPELINE.md) (패턴 SSOT)
+전체 가이드: [`./WEB_PLAYBOOK.md`](./WEB_PLAYBOOK.md) — 스킬 이식성을 위해 상대경로만 사용(절대경로 금지)

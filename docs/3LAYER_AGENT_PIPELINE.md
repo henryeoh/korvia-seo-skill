@@ -4,6 +4,8 @@ description: 대량/복잡 작업 시 검증된 실행 구조. Worker 병렬 실
 type: feedback
 originSessionId: 10654995-dff2-4b5c-a086-7c644c9a3bb1
 ---
+> **SSOT**: 3-레이어 파이프라인(Worker→Audit→최종) 패턴의 원본은 이 문서 하나다. 다른 문서(WEB_PLAYBOOK §0, README 등)에서 이 패턴을 언급할 때는 요약 1줄+이 파일 링크만 쓰고 본문을 복제하지 않는다.
+
 Henry가 선호하는 작업 패턴:
 ```
 Worker Agent A + B + C (병렬 실행, 각자 독립 파일 셋)

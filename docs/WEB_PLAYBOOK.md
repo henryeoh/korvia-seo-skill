@@ -1,6 +1,8 @@
 # Korvia Web Playbook — SEO + Performance + Accessibility
 > Distilled from 2026-04-17~18 www.korvia.com audit/implementation session (21 commits)
 > Use as checklist for any new Next.js page or site-wide audit
+>
+> ⚠ **2026-07 갱신 안내**: schema 일부(FAQPage/HowTo/SearchAction)는 이후 Google 리치결과 폐지로 **정정**됨. 스키마=[`SCHEMA_JSONLD_CATALOG.md`](./SCHEMA_JSONLD_CATALOG.md), robots/sitemap=[`ROBOTS_SITEMAP_RSS_TEMPLATES.md`](./ROBOTS_SITEMAP_RSS_TEMPLATES.md), 발행 전 게이트=[`CONTENT_AUTORULES.md`](./CONTENT_AUTORULES.md)를 최신 기준으로 따르라.
 
 ---
 
@@ -21,9 +23,10 @@ Henry의 느낌대로 바로 수정하지 않는다. 패턴:
 ## 1. SEO — robots/sitemap/llms.txt
 
 ### 1.1 robots.txt
-- [ ] AI 크롤러 명시 허용 (리드 비즈니스면): `GPTBot`, `OAI-SearchBot`, `ChatGPT-User`, `ClaudeBot`, `anthropic-ai`, `Claude-Web`, `PerplexityBot`, `Perplexity-User`, `Google-Extended`, `CCBot`, `Applebot-Extended`
-- [ ] 알려진 악성: `Bytespider` → Disallow
-- [ ] 각 User-Agent마다 `Allow: /` + `Disallow: ['/api/', '/_next/', '/admin/']`
+> ⚠ **[STALE 2026-07 → 봇 목록·템플릿 SSOT = [`ROBOTS_SITEMAP_RSS_TEMPLATES.md`](./ROBOTS_SITEMAP_RSS_TEMPLATES.md) §A]** 구목록의 `anthropic-ai`·`Claude-Web`은 폐기 UA(현행: `ClaudeBot`·`Claude-User`·`Claude-SearchBot`). 봇 목록·정책은 §A에서만 관리 — 여기 재기입 금지.
+- [ ] AI 크롤러 정책 = ROBOTS §A 준수(인용봇 미차단 필수 / 학습봇=사업 토글)
+- [ ] 알려진 악성: `Bytespider` → Disallow **+ robots 미준수 봇이라 Cloudflare WAF 병행 필수**
+- [ ] ~~각 User-Agent마다 `Allow: /` + `Disallow: ['/api/', '/_next/', '/admin/']`~~ **[정정 2026-07: RFC 9309 안티패턴 — named UA 그룹은 `*` 그룹 Disallow를 상속하지 않음.** 기본=`User-agent: *` 단일 그룹+공용 Disallow(`/api/`, `/admin/` — **`/_next/` 금지**: JS/CSS 렌더 리소스 차단으로 CWV·AIO 평가 불리), named 그룹이 필요하면 공용 Disallow를 그 그룹에도 명시 반복. 템플릿=ROBOTS §A]
 - [ ] **환경변수는 항상 `.trim()`** — trailing newline이 `Sitemap: https://...\n/path` 식으로 깨짐 (실제 버그)
 
 ### 1.2 sitemap.xml
@@ -33,8 +36,8 @@ Henry의 느낌대로 바로 수정하지 않는다. 패턴:
 - [ ] 숫자 슬러그 (`/3972-2`), 날짜 지난 공지, 이벤트 recap = prune 대상
 - [ ] 페이지는 200 응답 유지 (soft-delete = sitemap에서만 제거)
 
-### 1.3 llms.txt (llmstxt.org 규격)
-- [ ] `/public/llms.txt` 생성 — AI 크롤러 전용 discovery 파일
+### 1.3 llms.txt (llmstxt.org 규격) — **[2026-07: 선택·저ROI — Google 공식 "AI 텍스트 파일 불필요", 주요 엔진 소비 미확인]**
+- [ ] (선택) `/public/llms.txt` 생성 — AI 크롤러 전용 discovery 파일
 - [ ] 포함: Entity facts, canonical URLs, preferred attribution, crawl policy
 - [ ] 특히 "Preferred Attribution" 섹션 — AI가 인용할 때 쓸 정확한 문구
 
@@ -277,7 +280,7 @@ Henry의 느낌대로 바로 수정하지 않는다. 패턴:
 
 ### 12.1 AI 크롤러
 - Korvia는 ESL 리드 비즈니스 → AI 인용 = 잠재 리드
-- 11개 AI bot ALLOW + 1개 차단 (Bytespider)
+- 허용/차단 실목록 = [`ROBOTS_SITEMAP_RSS_TEMPLATES.md`](./ROBOTS_SITEMAP_RSS_TEMPLATES.md) §A (구 "11개 ALLOW + 1 차단" 카운트는 폐기 — 목록 드리프트 방지)
 
 ### 12.2 브랜드 컬러 보존
 - `#3288B3` Korvia Blue 변경 금지 (Henry 결정)
